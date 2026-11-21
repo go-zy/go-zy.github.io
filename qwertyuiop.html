@@ -1,0 +1,3142 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>ADMIN GO-ZY — Kasir &amp; Monev</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#FF751F" />
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/ddtgjvetf/image/upload/v1794708549/Glossy_Orange-Gold_3D_G_Arrow_Logo-removebg-preview_sg27r6.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            zyOrange: '#FF751F',
+            zyGold: '#FFCB05',
+            zyLight: '#F9F9F9',
+            zyCharcoal: '#333333',
+            zyBlack: '#000000',
+            zyWhite: '#FFFFFF'
+          },
+          fontFamily: {
+            montserrat: ['Montserrat', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <script>
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem('gozy_admin_theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    :root {
+      --bg-page: #F9F9F9;
+      --bg-surface: #FFFFFF;
+      --text-primary: #000000;
+      --text-secondary: #333333;
+      --border-hairline: rgba(0, 0, 0, 0.14);
+      --border-strong: #000000;
+      --card-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    html.dark {
+      --bg-page: #000000;
+      --bg-surface: #1A1A1A;
+      --text-primary: #FFFFFF;
+      --text-secondary: #F9F9F9;
+      --border-hairline: rgba(255, 255, 255, 0.18);
+      --border-strong: #FFFFFF;
+      --card-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-page);
+      color: var(--text-secondary);
+      font-weight: 600;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .font-eb {
+      font-weight: 800;
+    }
+
+    .font-sb {
+      font-weight: 600;
+    }
+
+    .zy-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.25s ease;
+    }
+
+    .zy-nav-icon-btn {
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+    }
+
+    .zy-nav-icon-btn:hover {
+      border-color: #FF751F;
+      transform: translateY(-1px);
+    }
+
+    .zy-nav-icon-btn.is-active {
+      background-color: #FF751F;
+      color: #FFFFFF;
+      border-color: #000000;
+    }
+
+    html.dark .zy-nav-icon-btn.is-active {
+      border-color: #FFFFFF;
+    }
+
+    .zy-btn-primary {
+      background-color: #FF751F;
+      color: #FFFFFF;
+      border: 1px solid #000000;
+      border-radius: 14px;
+      font-weight: 800;
+      transition: all 0.2s ease;
+    }
+
+    html.dark .zy-btn-primary {
+      border-color: #FFFFFF;
+    }
+
+    .zy-btn-primary:hover {
+      background-color: #FFCB05;
+      color: #000000;
+      transform: translateY(-1px);
+    }
+
+    .zy-btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .zy-scroll::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .zy-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .zy-scroll::-webkit-scrollbar-thumb {
+      background: #FF751F;
+      border-radius: 9999px;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm;
+      }
+
+      html, body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        font-size: 11pt;
+      }
+
+      header,
+      .no-print,
+      #zyToast,
+      #receiptModal,
+      #deleteConfirmModal {
+        display: none !important;
+      }
+
+      main {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+
+      body.printing-orders #sectionBookkeeping {
+        display: none !important;
+      }
+
+      body.printing-orders #printableOrdersSheet {
+        display: block !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+
+      body:not(.printing-orders) #sectionBookkeeping {
+        display: block !important;
+      }
+
+      #printableBookkeepingSheet {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+
+      table {
+        page-break-inside: auto;
+      }
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-[#FFCB05] selection:text-[#000000]">
+
+  <!-- HEADER -->
+  <header class="no-print sticky top-0 z-40 bg-[#FFFFFF]/95 dark:bg-[#000000]/95 backdrop-blur-md border-b border-[#000000]/15 dark:border-[#FFFFFF]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[72px] flex items-center justify-between gap-2">
+      <!-- Logo GO-ZY -->
+      <a href="#top" onclick="switchAdminSection('pos')" class="inline-flex items-center shrink-0 focus:outline-none" aria-label="GO-ZY Admin">
+        <img
+          src="https://res.cloudinary.com/ddtgjvetf/image/upload/v1794708549/Glossy_Orange-Gold_3D_G_Arrow_Logo-removebg-preview_sg27r6.png"
+          alt="GO-ZY"
+          class="h-9 sm:h-10 w-auto object-contain block"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
+        />
+        <span style="display:none;" class="text-xl font-eb text-[#000000] dark:text-[#FFFFFF]">
+          GO-<span class="text-[#FF751F]">ZY</span>
+        </span>
+      </a>
+
+      <!-- Navigasi Ikon Header -->
+      <nav class="flex items-center gap-1.5 sm:gap-2" aria-label="Navigasi Admin">
+        <!-- Ikon + : Buat Pesanan -->
+        <button
+          type="button"
+          data-nav-target="pos"
+          onclick="switchAdminSection('pos')"
+          title="Buat Pesanan"
+          aria-label="Buat Pesanan"
+          class="zy-nav-icon-btn is-active h-10 sm:h-11 px-3 sm:px-3.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <svg class="w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span class="hidden md:inline text-xs font-eb">Kasir</span>
+        </button>
+
+        <!-- Ikon Progres Pesanan -->
+        <button
+          type="button"
+          data-nav-target="orders"
+          onclick="switchAdminSection('orders')"
+          title="Progres Pesanan"
+          aria-label="Progres Pesanan"
+          class="zy-nav-icon-btn relative h-10 sm:h-11 px-3 sm:px-3.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <svg class="w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+          <span class="hidden md:inline text-xs font-eb">Pesanan</span>
+          <span
+            id="activeQueueBadge"
+            class="min-w-[20px] h-[20px] px-1 rounded-full bg-[#FFCB05] text-[#000000] border border-[#000000] text-[10px] font-eb inline-flex items-center justify-center tabular-nums"
+          >
+            0
+          </span>
+        </button>
+
+        <!-- Ikon Grafik -->
+        <button
+          type="button"
+          data-nav-target="monev"
+          onclick="switchAdminSection('monev')"
+          title="Lihat Grafik"
+          aria-label="Lihat Grafik"
+          class="zy-nav-icon-btn h-10 sm:h-11 px-3 sm:px-3.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <svg class="w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <span class="hidden md:inline text-xs font-eb">Grafik</span>
+        </button>
+
+        <!-- Ikon Nota : Pembukuan -->
+        <button
+          type="button"
+          data-nav-target="bookkeeping"
+          onclick="switchAdminSection('bookkeeping')"
+          title="Pembukuan"
+          aria-label="Pembukuan"
+          class="zy-nav-icon-btn h-10 sm:h-11 px-3 sm:px-3.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <svg class="w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z"></path>
+            <path d="M8 7h8"></path>
+            <path d="M8 11h8"></path>
+            <path d="M8 15h5"></path>
+          </svg>
+          <span class="hidden md:inline text-xs font-eb">Pembukuan</span>
+        </button>
+
+        <!-- Ikon Grid : Buat Menu Baru -->
+        <button
+          type="button"
+          data-nav-target="catalog"
+          onclick="openCreateMenuSection()"
+          title="Buat Menu Baru"
+          aria-label="Buat Menu Baru"
+          class="zy-nav-icon-btn h-10 sm:h-11 px-3 sm:px-3.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
+        >
+          <svg class="w-4 h-4 sm:w-[18px] sm:h-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          <span class="hidden md:inline text-xs font-eb">Menu</span>
+        </button>
+
+        <!-- Toggle Mode Layar -->
+        <button
+          type="button"
+          onclick="toggleTheme()"
+          title="Mode Layar"
+          aria-label="Mode Layar"
+          class="zy-nav-icon-btn h-10 sm:h-11 w-10 sm:w-11 inline-flex items-center justify-center cursor-pointer"
+        >
+          <svg id="iconSun" class="w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#FF751F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          <svg id="iconMoon" class="hidden w-4 h-4 sm:w-[18px] sm:h-[18px] text-[#FFCB05]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-7">
+
+    <!-- 4 CARD SUMMARY (LAPORAN BULANAN - STATIS TANPA SUB & TANPA KLIK NAVIGASI) -->
+    <section class="no-print grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5" aria-label="Ringkasan Bulanan">
+      <div class="zy-card relative overflow-hidden p-4 sm:p-5">
+        <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#FF751F] to-[#FFCB05]"></div>
+        <div class="text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75 mb-1.5">
+          PEMASUKAN
+        </div>
+        <div id="kpiMonthlyIncome" class="text-base sm:text-xl font-eb text-[#FF751F] tabular-nums leading-snug">
+          Rp0 Uang Masuk
+        </div>
+      </div>
+
+      <div class="zy-card relative overflow-hidden p-4 sm:p-5">
+        <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#FFCB05] to-[#FF751F]"></div>
+        <div class="text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75 mb-1.5">
+          TRANSAKSI
+        </div>
+        <div id="kpiMonthlyTransactions" class="text-base sm:text-xl font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums leading-snug">
+          0 Pembayaran Selesai
+        </div>
+      </div>
+
+      <div class="zy-card relative overflow-hidden p-4 sm:p-5">
+        <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#FF751F] to-[#FFCB05]"></div>
+        <div class="text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75 mb-1.5">
+          LAYANAN
+        </div>
+        <div id="kpiMonthlyServices" class="text-base sm:text-xl font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums leading-snug">
+          0 Pesanan Dibuat
+        </div>
+      </div>
+
+      <div class="zy-card relative overflow-hidden p-4 sm:p-5">
+        <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-[#FFCB05] to-[#FF751F]"></div>
+        <div class="text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75 mb-1.5">
+          PELANGGAN
+        </div>
+        <div id="kpiMonthlyCustomers" class="text-base sm:text-xl font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums leading-snug">
+          0 Orang Pemesan
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: KASIR / BUAT PESANAN -->
+    <section id="sectionPos" class="admin-section no-print space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#FF751F] to-[#FFCB05]"></span>
+          <h1 class="text-xl sm:text-2xl font-eb text-[#000000] dark:text-[#FFFFFF]">
+            DAFTAR MENU DAN VARIAN
+          </h1>
+        </div>
+
+        <!-- Filter Unit Layanan -->
+        <div class="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-[#FFFFFF] dark:bg-[#1A1A1A] border border-[#000000]/15 dark:border-[#FFFFFF]/20 self-start">
+          <button type="button" data-pos-unit="ALL" onclick="setPosUnitFilter('ALL')" class="pos-unit-btn px-3 py-1.5 rounded-xl text-xs font-eb uppercase bg-[#FF751F] text-[#FFFFFF] border border-[#000000] cursor-pointer">
+            SEMUA
+          </button>
+          <button type="button" data-pos-unit="GO-CARWASH" onclick="setPosUnitFilter('GO-CARWASH')" class="pos-unit-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+            WASH
+          </button>
+          <button type="button" data-pos-unit="GO-BARBERSHOP" onclick="setPosUnitFilter('GO-BARBERSHOP')" class="pos-unit-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+            BARBER
+          </button>
+          <button type="button" data-pos-unit="GO-CAFE" onclick="setPosUnitFilter('GO-CAFE')" class="pos-unit-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+            CAFE
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Daftar Kartu Menu & Varian -->
+        <div id="posMenuGrid" class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5"></div>
+
+        <!-- Formulir Pesanan -->
+        <div class="lg:col-span-5 zy-card p-5 sm:p-6 space-y-4 lg:sticky lg:top-24">
+          <div class="flex items-center justify-between gap-2 pb-3 border-b border-[#000000]/15 dark:border-[#FFFFFF]/20">
+            <h2 class="text-base sm:text-lg font-eb text-[#000000] dark:text-[#FFFFFF]">
+              FORMULIR PESANAN
+            </h2>
+            <button
+              type="button"
+              onclick="clearPosCart()"
+              class="text-xs font-eb text-[#FF751F] hover:underline cursor-pointer"
+            >
+              Reset
+            </button>
+          </div>
+
+          <div id="posCartItemsList" class="space-y-2.5 max-h-60 overflow-y-auto zy-scroll pr-1"></div>
+
+          <form id="posOrderForm" onsubmit="handlePosOrderSubmit(event)" class="space-y-3.5 pt-2 border-t border-[#000000]/15 dark:border-[#FFFFFF]/20">
+            <div>
+              <label for="posCustomerCode" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+                NOMOR PELANGGAN
+              </label>
+              <input
+                id="posCustomerCode"
+                type="text"
+                readonly
+                value="-"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#FF751F] focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label for="posOrderTime" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+                WAKTU PESANAN
+              </label>
+              <input
+                id="posOrderTime"
+                type="text"
+                readonly
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label for="posCustomerName" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+                NAMA PELANGGAN
+              </label>
+              <input
+                id="posCustomerName"
+                type="text"
+                required
+                placeholder="Masukkan nama pelanggan..."
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#FFFFFF] dark:bg-[#000000] border border-[#000000] dark:border-[#FFFFFF] text-xs sm:text-sm font-sb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+              />
+            </div>
+
+            <!-- Metode Pembayaran -->
+            <div>
+              <span class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1.5">
+                METODE PEMBAYARAN
+              </span>
+              <div class="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  data-pay-method="CASH"
+                  onclick="selectPaymentMethod('CASH')"
+                  class="pay-method-btn py-2.5 px-2 rounded-xl border border-[#000000] bg-[#FF751F] text-[#FFFFFF] text-xs font-eb uppercase cursor-pointer transition-all"
+                >
+                  CASH
+                </button>
+                <button
+                  type="button"
+                  data-pay-method="QRIS"
+                  onclick="selectPaymentMethod('QRIS')"
+                  class="pay-method-btn py-2.5 px-2 rounded-xl border border-[#000000]/25 dark:border-[#FFFFFF]/25 bg-[#F9F9F9] dark:bg-[#000000] text-[#000000] dark:text-[#FFFFFF] text-xs font-eb uppercase cursor-pointer transition-all"
+                >
+                  QRIS
+                </button>
+                <button
+                  type="button"
+                  data-pay-method="TRANSFER"
+                  onclick="selectPaymentMethod('TRANSFER')"
+                  class="pay-method-btn py-2.5 px-2 rounded-xl border border-[#000000]/25 dark:border-[#FFFFFF]/25 bg-[#F9F9F9] dark:bg-[#000000] text-[#000000] dark:text-[#FFFFFF] text-xs font-eb uppercase cursor-pointer transition-all"
+                >
+                  TRANSFER
+                </button>
+              </div>
+            </div>
+
+            <!-- Kalkulator Kembalian Tunai (CASH) -->
+            <div id="posCashCalculatorBox" class="p-3.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/20 dark:border-[#FFFFFF]/20 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <label for="posCashReceived" class="text-[11px] font-eb uppercase text-[#333333] dark:text-[#F9F9F9]">
+                  Uang Tunai Diterima
+                </label>
+                <input
+                  id="posCashReceived"
+                  type="number"
+                  min="0"
+                  step="1000"
+                  placeholder="0"
+                  oninput="updatePosCashChange()"
+                  class="w-36 px-3 py-1.5 rounded-lg bg-[#FFFFFF] dark:bg-[#1A1A1A] border border-[#000000] dark:border-[#FFFFFF] text-right text-xs font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums focus:outline-none focus:border-[#FF751F]"
+                />
+              </div>
+              <div class="flex items-center justify-between text-xs pt-1.5 border-t border-[#000000]/10 dark:border-[#FFFFFF]/15">
+                <span class="font-sb text-[#333333] dark:text-[#F9F9F9]">Kembalian</span>
+                <span id="posCashChangeText" class="font-eb text-[#FF751F] tabular-nums">Rp0</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="posTotalCost" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+                  TOTAL BIAYA
+                </label>
+                <input
+                  id="posTotalCost"
+                  type="text"
+                  readonly
+                  value="Rp0"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs sm:text-sm font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label for="posTotalCashback" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+                  CASHBACK
+                </label>
+                <input
+                  id="posTotalCashback"
+                  type="text"
+                  readonly
+                  value="Rp0"
+                  class="w-full px-3.5 py-2.5 rounded-xl bg-[#FFCB05] border border-[#000000] text-xs sm:text-sm font-eb text-[#000000] tabular-nums focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="zy-btn-primary w-full py-3.5 px-4 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+            >
+              BUAT PESANAN
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PROGRES PESANAN -->
+    <section id="sectionOrders" class="admin-section no-print hidden space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#FF751F] to-[#FFCB05]"></span>
+          <h2 class="text-xl sm:text-2xl font-eb text-[#000000] dark:text-[#FFFFFF]">
+            PROGRES PESANAN
+          </h2>
+        </div>
+      </div>
+
+      <!-- Pengaturan Daftar: Periode, Status, Menu, Metode -->
+      <div class="zy-card p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <select
+          id="orderPeriodFilter"
+          aria-label="Periode"
+          onchange="renderOrdersTable()"
+          class="px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+        >
+          <option value="ALL">Periode</option>
+          <option value="daily">Harian</option>
+          <option value="weekly">Mingguan</option>
+          <option value="monthly">Bulanan</option>
+        </select>
+
+        <select
+          id="orderStatusFilter"
+          aria-label="Status"
+          onchange="renderOrdersTable()"
+          class="px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+        >
+          <option value="ALL">Status</option>
+          <option value="Menunggu">Menunggu</option>
+          <option value="Diproses">Diproses</option>
+          <option value="Selesai">Selesai</option>
+        </select>
+
+        <select
+          id="orderUnitFilter"
+          aria-label="Menu"
+          onchange="renderOrdersTable()"
+          class="px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+        >
+          <option value="ALL">Menu</option>
+          <option value="GO-CARWASH">GO-CARWASH</option>
+          <option value="GO-BARBERSHOP">GO-BARBERSHOP</option>
+          <option value="GO-CAFE">GO-CAFE</option>
+        </select>
+
+        <select
+          id="orderPaymentFilter"
+          aria-label="Metode"
+          onchange="renderOrdersTable()"
+          class="px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+        >
+          <option value="ALL">Metode</option>
+          <option value="CASH">CASH</option>
+          <option value="QRIS">QRIS</option>
+          <option value="TRANSFER">TRANSFER</option>
+        </select>
+      </div>
+
+      <div id="ordersListContainer" class="space-y-3"></div>
+    </section>
+
+    <!-- LEMBAR CETAK PDF PROGRES PESANAN (A4) -->
+    <div id="printableOrdersSheet" class="hidden bg-[#FFFFFF] text-[#000000] space-y-5"></div>
+
+    <!-- SECTION 3: MONEV & GRAFIK -->
+    <section id="sectionMonev" class="admin-section no-print hidden space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#FF751F] to-[#FFCB05]"></span>
+          <h2 class="text-xl sm:text-2xl font-eb text-[#000000] dark:text-[#FFFFFF]">
+            PERSENTASE BISNIS
+          </h2>
+        </div>
+
+        <!-- Pemilih Periode Grafik -->
+        <div class="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-[#FFFFFF] dark:bg-[#1A1A1A] border border-[#000000]/15 dark:border-[#FFFFFF]/20 self-start">
+          <button type="button" data-chart-period="daily" onclick="setMonevChartPeriod('daily')" class="chart-period-btn px-3.5 py-1.5 rounded-xl text-xs font-eb uppercase bg-[#FF751F] text-[#FFFFFF] border border-[#000000] cursor-pointer">
+            Harian
+          </button>
+          <button type="button" data-chart-period="weekly" onclick="setMonevChartPeriod('weekly')" class="chart-period-btn px-3.5 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+            Mingguan
+          </button>
+          <button type="button" data-chart-period="monthly" onclick="setMonevChartPeriod('monthly')" class="chart-period-btn px-3.5 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+            Bulanan
+          </button>
+        </div>
+      </div>
+
+      <!-- Ringkasan Pemasukan 4 Periode -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div class="zy-card p-4">
+          <div class="text-[10px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75">Pemasukan Harian</div>
+          <div id="monevIncomeDaily" class="text-base sm:text-lg font-eb text-[#FF751F] mt-1 tabular-nums">Rp0</div>
+        </div>
+        <div class="zy-card p-4">
+          <div class="text-[10px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75">Pemasukan Mingguan</div>
+          <div id="monevIncomeWeekly" class="text-base sm:text-lg font-eb text-[#000000] dark:text-[#FFFFFF] mt-1 tabular-nums">Rp0</div>
+        </div>
+        <div class="zy-card p-4">
+          <div class="text-[10px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75">Pemasukan Bulanan</div>
+          <div id="monevIncomeMonthly" class="text-base sm:text-lg font-eb text-[#000000] dark:text-[#FFFFFF] mt-1 tabular-nums">Rp0</div>
+        </div>
+        <div class="zy-card p-4">
+          <div class="text-[10px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9]/75">Pemasukan Keseluruhan</div>
+          <div id="monevIncomeAll" class="text-base sm:text-lg font-eb text-[#FFCB05] bg-[#000000] inline-block px-2 py-0.5 rounded-lg mt-1 tabular-nums">Rp0</div>
+        </div>
+      </div>
+
+      <!-- Grafik Batang Pemasukan -->
+      <div class="zy-card p-5 sm:p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 id="monevChartTitle" class="text-base font-eb text-[#000000] dark:text-[#FFFFFF]">
+              Grafik Pemasukan Harian (7 Hari Terakhir)
+            </h3>
+            <p id="monevChartSubtitle" class="text-xs font-sb text-[#333333] dark:text-[#F9F9F9]/75">
+              Akumulasi transaksi pemasukan berdasarkan tanggal pesanan
+            </p>
+          </div>
+          <div id="monevChartTotalBadge" class="px-3.5 py-1.5 rounded-xl bg-[#FFCB05] text-[#000000] border border-[#000000] text-xs font-eb tabular-nums self-start">
+            Total: Rp0
+          </div>
+        </div>
+
+        <div id="monevChartCanvas" class="pt-4"></div>
+      </div>
+
+      <!-- Distribusi Metode Pembayaran & Unit Layanan -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="zy-card p-5 space-y-3.5">
+          <h3 class="text-sm font-eb uppercase tracking-wider text-[#000000] dark:text-[#FFFFFF]">
+            Metode Pembayaran (Keseluruhan)
+          </h3>
+          <div id="monevPaymentBreakdown" class="space-y-2.5"></div>
+        </div>
+
+        <div class="zy-card p-5 space-y-3.5">
+          <h3 class="text-sm font-eb uppercase tracking-wider text-[#000000] dark:text-[#FFFFFF]">
+            Kontribusi Unit Layanan
+          </h3>
+          <div id="monevUnitBreakdown" class="space-y-2.5"></div>
+        </div>
+      </div>
+
+      <!-- Total Layanan Dipesan & Masing-Masing Layanan -->
+      <div class="zy-card p-5 sm:p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 class="text-base font-eb text-[#000000] dark:text-[#FFFFFF]">
+              Rekap Total Layanan Dipesan
+            </h3>
+            <p class="text-xs font-sb text-[#333333] dark:text-[#F9F9F9]/75">
+              Rincian jumlah pesanan masing-masing layanan dari keseluruhan transaksi
+            </p>
+          </div>
+          <div id="monevGrandServiceTotal" class="px-3.5 py-1.5 rounded-xl bg-[#000000] text-[#FFCB05] text-xs font-eb tabular-nums self-start">
+            Total: 0 Layanan
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left border-collapse">
+            <thead>
+              <tr class="border-b border-[#000000]/20 dark:border-[#FFFFFF]/20 text-[11px] font-eb uppercase text-[#333333] dark:text-[#F9F9F9]/80">
+                <th class="py-2.5 px-3">Unit</th>
+                <th class="py-2.5 px-3">Nama Layanan</th>
+                <th class="py-2.5 px-3">Kode</th>
+                <th class="py-2.5 px-3 text-right">Dipesan</th>
+                <th class="py-2.5 px-3 text-right">Total Pemasukan</th>
+              </tr>
+            </thead>
+            <tbody id="monevServiceBreakdownBody" class="divide-y divide-[#000000]/10 dark:divide-[#FFFFFF]/10"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: CETAK PEMBUKUAN A4 -->
+    <section id="sectionBookkeeping" class="admin-section hidden space-y-5">
+      <div class="no-print flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span class="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#FF751F] to-[#FFCB05]"></span>
+          <h2 class="text-xl sm:text-2xl font-eb text-[#000000] dark:text-[#FFFFFF]">
+            LAPORAN KEUANGAN
+          </h2>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="inline-flex items-center gap-1 p-1 rounded-2xl bg-[#FFFFFF] dark:bg-[#1A1A1A] border border-[#000000]/15 dark:border-[#FFFFFF]/20">
+            <button type="button" data-bk-period="daily" onclick="setBookkeepingPeriod('daily')" class="bk-period-btn px-3 py-1.5 rounded-xl text-xs font-eb uppercase bg-[#FF751F] text-[#FFFFFF] border border-[#000000] cursor-pointer">
+              Harian
+            </button>
+            <button type="button" data-bk-period="weekly" onclick="setBookkeepingPeriod('weekly')" class="bk-period-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+              Mingguan
+            </button>
+            <button type="button" data-bk-period="monthly" onclick="setBookkeepingPeriod('monthly')" class="bk-period-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+              Bulanan
+            </button>
+            <button type="button" data-bk-period="all" onclick="setBookkeepingPeriod('all')" class="bk-period-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer">
+              Keseluruhan
+            </button>
+          </div>
+
+          <input
+            id="bkDatePicker"
+            type="date"
+            onchange="renderBookkeepingSheet()"
+            class="px-3 py-2 rounded-xl bg-[#FFFFFF] dark:bg-[#1A1A1A] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+          />
+
+          <input
+            id="bkMonthPicker"
+            type="month"
+            onchange="renderBookkeepingSheet()"
+            class="hidden px-3 py-2 rounded-xl bg-[#FFFFFF] dark:bg-[#1A1A1A] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+          />
+
+          <button
+            type="button"
+            onclick="printBookkeepingPdf()"
+            class="zy-btn-primary px-4 py-2 text-xs uppercase tracking-wider inline-flex items-center gap-2 cursor-pointer"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            <span>Cetak Pembukuan</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Lembar Pembukuan Siap Cetak A4 -->
+      <div id="printableBookkeepingSheet" class="zy-card p-6 sm:p-8 bg-[#FFFFFF] text-[#000000] space-y-6"></div>
+    </section>
+
+    <!-- SECTION 5: BUAT MENU BARU & KELOLA KATALOG -->
+    <section id="sectionCatalog" class="admin-section no-print hidden space-y-6">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#FF751F] to-[#FFCB05]"></span>
+        <h2 class="text-xl sm:text-2xl font-eb text-[#000000] dark:text-[#FFFFFF]">
+          BUAT MENU BARU
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Form Tambah Menu Baru -->
+        <form id="newMenuForm" onsubmit="handleCreateNewMenu(event)" class="lg:col-span-5 zy-card p-5 sm:p-6 space-y-4">
+          <h3 class="text-base font-eb text-[#000000] dark:text-[#FFFFFF] pb-3 border-b border-[#000000]/15 dark:border-[#FFFFFF]/20">
+            FORMULIR MENU BARU
+          </h3>
+
+          <div>
+            <label for="newMenuUnit" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+              UNIT LAYANAN
+            </label>
+            <select
+              id="newMenuUnit"
+              onchange="syncSuggestedMenuCode()"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+            >
+              <option value="GO-CARWASH">GO-CARWASH</option>
+              <option value="GO-BARBERSHOP">GO-BARBERSHOP</option>
+              <option value="GO-CAFE">GO-CAFE</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="newMenuName" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+              NAMA MENU / VARIAN
+            </label>
+            <input
+              id="newMenuName"
+              type="text"
+              required
+              oninput="syncSuggestedMenuCode()"
+              placeholder="Contoh: Cuci Salju / Kopi Susu Gula Aren"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-[#FFFFFF] dark:bg-[#000000] border border-[#000000] dark:border-[#FFFFFF] text-xs sm:text-sm font-sb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+            />
+          </div>
+
+          <div>
+            <label for="newMenuCode" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+              KODE PELANGGAN
+            </label>
+            <input
+              id="newMenuCode"
+              type="text"
+              required
+              placeholder="GO-WASH/MENU/14"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#FF751F] focus:outline-none focus:border-[#FF751F]"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="newMenuPrice" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+                HARGA / TARIF (RP)
+              </label>
+              <input
+                id="newMenuPrice"
+                type="number"
+                min="1000"
+                step="500"
+                required
+                placeholder="15000"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#FFFFFF] dark:bg-[#000000] border border-[#000000] dark:border-[#FFFFFF] text-xs sm:text-sm font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums focus:outline-none focus:border-[#FF751F]"
+              />
+            </div>
+
+            <div>
+              <label for="newMenuCashback" class="block text-[11px] font-eb uppercase tracking-wider text-[#333333] dark:text-[#F9F9F9] mb-1">
+                CASHBACK (RP)
+              </label>
+              <input
+                id="newMenuCashback"
+                type="number"
+                min="0"
+                step="500"
+                value="0"
+                required
+                class="w-full px-3.5 py-2.5 rounded-xl bg-[#FFCB05] border border-[#000000] text-xs sm:text-sm font-eb text-[#000000] tabular-nums focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="zy-btn-primary w-full py-3.5 px-4 text-xs sm:text-sm uppercase tracking-wider cursor-pointer"
+          >
+            SIMPAN MENU BARU
+          </button>
+        </form>
+
+        <!-- Daftar Master Menu & Ketersediaan -->
+        <div class="lg:col-span-7 zy-card p-5 sm:p-6 space-y-4">
+          <div class="flex items-center justify-between gap-2 pb-3 border-b border-[#000000]/15 dark:border-[#FFFFFF]/20">
+            <h3 class="text-base font-eb text-[#000000] dark:text-[#FFFFFF]">
+              DAFTAR MENU AKTIF
+            </h3>
+            <span id="catalogCountBadge" class="px-3 py-1 rounded-full bg-[#000000] text-[#FFCB05] text-xs font-eb tabular-nums">
+              13 Menu
+            </span>
+          </div>
+
+          <div id="catalogManageList" class="space-y-2.5 max-h-[540px] overflow-y-auto zy-scroll pr-1"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL PRATINJAU INVOICE GAMBAR PNG -->
+  <div id="receiptModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#000000]/75 backdrop-blur-xs" role="dialog" aria-modal="true">
+    <div class="zy-card w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="p-4 border-b border-[#000000]/15 dark:border-[#FFFFFF]/20 flex items-center justify-between">
+        <h3 class="text-sm sm:text-base font-eb text-[#000000] dark:text-[#FFFFFF]">INVOICE</h3>
+        <button
+          type="button"
+          onclick="closeReceiptModal()"
+          class="w-8 h-8 rounded-xl border border-[#000000] dark:border-[#FFFFFF] text-xs font-eb flex items-center justify-center hover:bg-[#FF751F] hover:text-[#FFFFFF] cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
+      <div id="receiptModalBody" class="p-4 overflow-y-auto zy-scroll flex-1"></div>
+      <div id="receiptModalActions" class="p-4 border-t border-[#000000]/15 dark:border-[#FFFFFF]/20 grid grid-cols-1 gap-2.5"></div>
+    </div>
+  </div>
+
+  <!-- MODAL KONFIRMASI HAPUS -->
+  <div id="deleteConfirmModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#000000]/75 backdrop-blur-xs" role="dialog" aria-modal="true">
+    <div class="zy-card w-full max-w-sm p-5 space-y-4">
+      <h3 class="text-base font-eb text-[#000000] dark:text-[#FFFFFF]">Konfirmasi Hapus</h3>
+      <p id="deleteModalMessage" class="text-xs font-sb text-[#333333] dark:text-[#F9F9F9] leading-relaxed"></p>
+      <div class="flex items-center justify-end gap-2.5 pt-2">
+        <button
+          type="button"
+          onclick="closeDeleteModal()"
+          class="px-4 py-2 rounded-xl border border-[#000000] dark:border-[#FFFFFF] text-xs font-eb cursor-pointer"
+        >
+          Batal
+        </button>
+        <button
+          id="confirmDeleteBtn"
+          type="button"
+          class="zy-btn-primary px-4 py-2 text-xs uppercase cursor-pointer"
+        >
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div
+    id="zyToast"
+    role="status"
+    aria-live="polite"
+    class="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-[max-content] max-w-[92vw] px-4 py-2.5 rounded-2xl bg-[#000000] text-[#FFFFFF] border border-[#FFCB05] shadow-xl flex items-center gap-2.5 transform -translate-y-10 opacity-0 pointer-events-none transition-all duration-300"
+  >
+    <span class="w-2.5 h-2.5 rounded-full bg-[#FF751F] shrink-0"></span>
+    <span id="zyToastMsg" class="text-xs font-sb"></span>
+  </div>
+
+  <script>
+    const STORAGE_ORDERS_KEY = 'gozy_admin_orders_v1';
+    const STORAGE_CUSTOM_MENU_KEY = 'gozy_admin_custom_menus_v1';
+    const STORAGE_DISABLED_MENU_KEY = 'gozy_admin_disabled_menus_v1';
+    const WHATSAPP_ADMIN_NUMBER = '6287859245125';
+    const GOZY_INVOICE_LOGO_URL = 'https://res.cloudinary.com/ddtgjvetf/image/upload/v1794708549/Glossy_Orange-Gold_3D_G_Arrow_Logo-removebg-preview_sg27r6.png';
+    let cachedInvoiceLogoImg = null;
+
+    const BASE_CATALOG = [
+      { id: 'cw-motor-kecil', customerCode: 'GO-WASH/CMK/03', platform: 'GO-CARWASH', name: 'Cuci Motor Kecil', price: 15000, cashback: 3000 },
+      { id: 'cw-motor-besar', customerCode: 'GO-WASH/CMB/04', platform: 'GO-CARWASH', name: 'Cuci Motor Besar', price: 20000, cashback: 3000 },
+      { id: 'cw-mobil-kecil', customerCode: 'GO-WASH/CMK/01', platform: 'GO-CARWASH', name: 'Cuci Mobil Kecil', price: 50000, cashback: 5000 },
+      { id: 'cw-mobil-besar', customerCode: 'GO-WASH/CMB/02', platform: 'GO-CARWASH', name: 'Cuci Mobil Besar', price: 60000, cashback: 5000 },
+      { id: 'bs-pangkas', customerCode: 'GO-BARBER/PRB/05', platform: 'GO-BARBERSHOP', name: 'Pangkas Rambut', price: 15000, cashback: 3000 },
+      { id: 'bs-minyak-rambut', customerCode: 'GO-BARBER/MRB/06', platform: 'GO-BARBERSHOP', name: 'Minyak Rambut', price: 25000, cashback: 3000 },
+      { id: 'bs-shampoo-rambut', customerCode: 'GO-BARBER/SRB/07', platform: 'GO-BARBERSHOP', name: 'Shampoo Rambut', price: 35000, cashback: 5000 },
+      { id: 'bs-vitamin-rambut', customerCode: 'GO-BARBER/VRB/08', platform: 'GO-BARBERSHOP', name: 'Vitamin Rambut', price: 45000, cashback: 8000 },
+      { id: 'cf-kopi', customerCode: 'GO-CAFE/KOPI/09', platform: 'GO-CAFE', name: 'Kopi', price: 5000, cashback: 0 },
+      { id: 'cf-susu', customerCode: 'GO-CAFE/SUSU/10', platform: 'GO-CAFE', name: 'Susu', price: 5000, cashback: 0 },
+      { id: 'cf-roti', customerCode: 'GO-CAFE/ROTI/11', platform: 'GO-CAFE', name: 'Roti Bakar', price: 5000, cashback: 0 },
+      { id: 'cf-air', customerCode: 'GO-CAFE/AIR/12', platform: 'GO-CAFE', name: 'Air Mineral', price: 3000, cashback: 0 },
+      { id: 'cf-teh', customerCode: 'GO-CAFE/TEH/13', platform: 'GO-CAFE', name: 'Teh', price: 3000, cashback: 0 }
+    ];
+
+    let customMenus = [];
+    let disabledMenuIds = [];
+    let ordersList = [];
+    let posCart = [];
+    let posUnitFilter = 'ALL';
+    let posPaymentMethod = 'CASH';
+    let monevChartPeriod = 'daily';
+    let bookkeepingPeriod = 'daily';
+    let activeReceiptDataUrl = '';
+    let activeReceiptFilename = '';
+    let toastTimer = null;
+    let pendingDeleteCallback = null;
+
+    function getAllMenus() {
+      return [...BASE_CATALOG, ...customMenus];
+    }
+
+    function formatIDR(num) {
+      return 'Rp' + Number(num || 0).toLocaleString('id-ID');
+    }
+
+    function formatOrderDateTime(dateObj) {
+      const dd = String(dateObj.getDate()).padStart(2, '0');
+      const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const yyyy = dateObj.getFullYear();
+      const ss = String(dateObj.getSeconds()).padStart(2, '0');
+      const mins = String(dateObj.getMinutes()).padStart(2, '0');
+      const hh = String(dateObj.getHours()).padStart(2, '0');
+      return `${dd}/${mm}/${yyyy} - ${ss}.${mins}.${hh}`;
+    }
+
+    function toISODateLocal(dateObj) {
+      const yyyy = dateObj.getFullYear();
+      const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const dd = String(dateObj.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    function toISOMonthLocal(dateObj) {
+      const yyyy = dateObj.getFullYear();
+      const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+      return `${yyyy}-${mm}`;
+    }
+
+    function parseOrderDate(order) {
+      if (order.createdAtISO) {
+        const d = new Date(order.createdAtISO);
+        if (!isNaN(d.getTime())) return d;
+      }
+      if (order.orderTime) {
+        const match = String(order.orderTime).match(/^(\d{2})\/(\d{2})\/(\d{4})\s*-\s*(\d{2})\.(\d{2})\.(\d{2})/);
+        if (match) {
+          const [, dd, mm, yyyy, ss, mins, hh] = match;
+          return new Date(Number(yyyy), Number(mm) - 1, Number(dd), Number(hh), Number(mins), Number(ss));
+        }
+      }
+      return new Date();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('zyToast');
+      const text = document.getElementById('zyToastMsg');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('-translate-y-10', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('-translate-y-10', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 2600);
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      try {
+        localStorage.setItem('gozy_admin_theme', isDark ? 'dark' : 'light');
+      } catch (e) {}
+      syncThemeIcons();
+      renderMonevChart();
+    }
+
+    function syncThemeIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const sun = document.getElementById('iconSun');
+      const moon = document.getElementById('iconMoon');
+      if (!sun || !moon) return;
+      if (isDark) {
+        sun.classList.add('hidden');
+        moon.classList.remove('hidden');
+      } else {
+        moon.classList.add('hidden');
+        sun.classList.remove('hidden');
+      }
+    }
+
+    function seedInitialOrdersIfNeeded() {
+      try {
+        const rawMenus = localStorage.getItem(STORAGE_CUSTOM_MENU_KEY);
+        if (rawMenus) customMenus = JSON.parse(rawMenus) || [];
+      } catch (e) {
+        customMenus = [];
+      }
+
+      try {
+        const rawDisabled = localStorage.getItem(STORAGE_DISABLED_MENU_KEY);
+        if (rawDisabled) disabledMenuIds = JSON.parse(rawDisabled) || [];
+      } catch (e) {
+        disabledMenuIds = [];
+      }
+
+      try {
+        const rawOrders = localStorage.getItem(STORAGE_ORDERS_KEY);
+        if (rawOrders) {
+          ordersList = JSON.parse(rawOrders) || [];
+          return;
+        }
+      } catch (e) {
+        ordersList = [];
+      }
+
+      const now = new Date();
+      const d0 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9, 15, 10);
+      const d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 11, 40, 22);
+      const d2 = new Date(now.getFullYear(), now.getMonth(), Math.max(1, now.getDate() - 1), 14, 20, 5);
+      const d3 = new Date(now.getFullYear(), now.getMonth(), Math.max(1, now.getDate() - 2), 10, 5, 44);
+
+      ordersList = [
+        {
+          uid: 'ord-seed-1',
+          customerNo: 'GO-WASH/CMK/01, GO-CAFE/KOPI/09',
+          orderTime: formatOrderDateTime(d1),
+          createdAtISO: d1.toISOString(),
+          customerName: 'Lalu Ahmad',
+          paymentMethod: 'QRIS',
+          status: 'Diproses',
+          items: [
+            { id: 'cw-mobil-kecil', customerCode: 'GO-WASH/CMK/01', platform: 'GO-CARWASH', name: 'Cuci Mobil Kecil', price: 50000, cashback: 5000, qty: 1 },
+            { id: 'cf-kopi', customerCode: 'GO-CAFE/KOPI/09', platform: 'GO-CAFE', name: 'Kopi', price: 5000, cashback: 0, qty: 2 }
+          ],
+          subtotal: 60000,
+          cashback: 5000
+        },
+        {
+          uid: 'ord-seed-2',
+          customerNo: 'GO-BARBER/PRB/05, GO-CAFE/TEH/13',
+          orderTime: formatOrderDateTime(d0),
+          createdAtISO: d0.toISOString(),
+          customerName: 'Rizky Pratama',
+          paymentMethod: 'CASH',
+          status: 'Selesai',
+          items: [
+            { id: 'bs-pangkas', customerCode: 'GO-BARBER/PRB/05', platform: 'GO-BARBERSHOP', name: 'Pangkas Rambut', price: 15000, cashback: 3000, qty: 1 },
+            { id: 'cf-teh', customerCode: 'GO-CAFE/TEH/13', platform: 'GO-CAFE', name: 'Teh', price: 3000, cashback: 0, qty: 1 }
+          ],
+          subtotal: 18000,
+          cashback: 3000
+        },
+        {
+          uid: 'ord-seed-3',
+          customerNo: 'GO-WASH/CMB/02, GO-BARBER/VRB/08',
+          orderTime: formatOrderDateTime(d2),
+          createdAtISO: d2.toISOString(),
+          customerName: 'Hendra Wijaya',
+          paymentMethod: 'TRANSFER',
+          status: 'Selesai',
+          items: [
+            { id: 'cw-mobil-besar', customerCode: 'GO-WASH/CMB/02', platform: 'GO-CARWASH', name: 'Cuci Mobil Besar', price: 60000, cashback: 5000, qty: 1 },
+            { id: 'bs-vitamin-rambut', customerCode: 'GO-BARBER/VRB/08', platform: 'GO-BARBERSHOP', name: 'Vitamin Rambut', price: 45000, cashback: 8000, qty: 1 }
+          ],
+          subtotal: 105000,
+          cashback: 13000
+        },
+        {
+          uid: 'ord-seed-4',
+          customerNo: 'GO-WASH/CMB/04, GO-CAFE/ROTI/11',
+          orderTime: formatOrderDateTime(d3),
+          createdAtISO: d3.toISOString(),
+          customerName: 'Baiq Nisa',
+          paymentMethod: 'CASH',
+          status: 'Selesai',
+          items: [
+            { id: 'cw-motor-besar', customerCode: 'GO-WASH/CMB/04', platform: 'GO-CARWASH', name: 'Cuci Motor Besar', price: 20000, cashback: 3000, qty: 1 },
+            { id: 'cf-roti', customerCode: 'GO-CAFE/ROTI/11', platform: 'GO-CAFE', name: 'Roti Bakar', price: 5000, cashback: 0, qty: 2 }
+          ],
+          subtotal: 30000,
+          cashback: 3000
+        }
+      ];
+      saveOrders();
+    }
+
+    function saveOrders() {
+      try {
+        localStorage.setItem(STORAGE_ORDERS_KEY, JSON.stringify(ordersList));
+      } catch (e) {}
+    }
+
+    function saveCustomMenus() {
+      try {
+        localStorage.setItem(STORAGE_CUSTOM_MENU_KEY, JSON.stringify(customMenus));
+        localStorage.setItem(STORAGE_DISABLED_MENU_KEY, JSON.stringify(disabledMenuIds));
+      } catch (e) {}
+    }
+
+    function switchAdminSection(sectionKey) {
+      const map = {
+        pos: 'sectionPos',
+        orders: 'sectionOrders',
+        monev: 'sectionMonev',
+        bookkeeping: 'sectionBookkeeping',
+        catalog: 'sectionCatalog'
+      };
+
+      Object.entries(map).forEach(([key, id]) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (key === sectionKey) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+
+      document.querySelectorAll('[data-nav-target]').forEach(btn => {
+        const active = btn.getAttribute('data-nav-target') === sectionKey;
+        if (active) {
+          btn.classList.add('is-active');
+        } else {
+          btn.classList.remove('is-active');
+        }
+      });
+
+      if (sectionKey === 'orders') renderOrdersTable();
+      if (sectionKey === 'monev') renderMonevDashboard();
+      if (sectionKey === 'bookkeeping') renderBookkeepingSheet();
+      if (sectionKey === 'catalog') renderCatalogManager();
+    }
+
+    function openCreateMenuSection() {
+      switchAdminSection('catalog');
+      syncSuggestedMenuCode();
+      requestAnimationFrame(() => {
+        const nameEl = document.getElementById('newMenuName');
+        if (nameEl) nameEl.focus();
+      });
+    }
+
+    /* 4 CARD SUMMARY (LAPORAN BULANAN) */
+    function renderMonthlySummaryCards() {
+      const now = new Date();
+      const monthlyOrders = ordersList.filter(o => {
+        const d = parseOrderDate(o);
+        return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+      });
+
+      const totalIncome = monthlyOrders.reduce((s, o) => s + Number(o.subtotal || 0), 0);
+      const totalTx = monthlyOrders.length;
+      const totalServices = monthlyOrders.reduce(
+        (s, o) => s + (o.items || []).reduce((acc, it) => acc + Number(it.qty || 0), 0),
+        0
+      );
+      const uniqueCustomers = new Set(
+        monthlyOrders.map(o => String(o.customerName || '').trim().toLowerCase()).filter(Boolean)
+      ).size;
+
+      const incomeEl = document.getElementById('kpiMonthlyIncome');
+      const txEl = document.getElementById('kpiMonthlyTransactions');
+      const srvEl = document.getElementById('kpiMonthlyServices');
+      const custEl = document.getElementById('kpiMonthlyCustomers');
+      const queueBadge = document.getElementById('activeQueueBadge');
+
+      if (incomeEl) incomeEl.textContent = `${formatIDR(totalIncome)} Uang Masuk`;
+      if (txEl) txEl.textContent = `${totalTx} Pembayaran Selesai`;
+      if (srvEl) srvEl.textContent = `${totalServices} Pesanan Dibuat`;
+      if (custEl) custEl.textContent = `${uniqueCustomers} Orang Pemesan`;
+
+      if (queueBadge) {
+        const activeCount = ordersList.filter(o => o.status !== 'Selesai').length;
+        queueBadge.textContent = activeCount;
+      }
+    }
+
+    /* KASIR / POS */
+    function setPosUnitFilter(unit) {
+      posUnitFilter = unit;
+      document.querySelectorAll('.pos-unit-btn').forEach(btn => {
+        const active = btn.getAttribute('data-pos-unit') === unit;
+        if (active) {
+          btn.className = 'pos-unit-btn px-3 py-1.5 rounded-xl text-xs font-eb uppercase bg-[#FF751F] text-[#FFFFFF] border border-[#000000] cursor-pointer';
+        } else {
+          btn.className = 'pos-unit-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer';
+        }
+      });
+      renderPosMenuGrid();
+    }
+
+    function renderPosMenuGrid() {
+      const grid = document.getElementById('posMenuGrid');
+      if (!grid) return;
+
+      const availableMenus = getAllMenus().filter(m => {
+        if (disabledMenuIds.includes(m.id)) return false;
+        return posUnitFilter === 'ALL' || m.platform === posUnitFilter;
+      });
+
+      grid.innerHTML = availableMenus
+        .map(item => {
+          const inCart = posCart.find(c => c.id === item.id);
+          const qty = inCart ? inCart.qty : 0;
+
+          return `
+            <div class="zy-card p-4 flex flex-col justify-between gap-3 ${qty > 0 ? 'border-[#FF751F]' : ''}">
+              <div>
+                <div class="flex items-center justify-between gap-1.5 mb-2 flex-wrap">
+                  <span class="px-2.5 py-0.5 rounded-full bg-[#000000] text-[#FFCB05] text-[10px] font-eb">
+                    ${item.platform}
+                  </span>
+                  ${
+                    item.cashback > 0
+                      ? `<span class="px-2 py-0.5 rounded-full bg-[#FFCB05] text-[#000000] border border-[#000000] text-[10px] font-eb">
+                          Cashback ${formatIDR(item.cashback)}
+                        </span>`
+                      : ''
+                  }
+                </div>
+                <div class="text-sm font-eb text-[#000000] dark:text-[#FFFFFF]">${item.name}</div>
+                <div class="text-xs font-sb text-[#333333] dark:text-[#F9F9F9]/70 mt-0.5">${item.customerCode}</div>
+                <div class="text-base font-eb text-[#FF751F] mt-1.5 tabular-nums">${formatIDR(item.price)}</div>
+              </div>
+
+              <div class="pt-2.5 border-t border-[#000000]/10 dark:border-[#FFFFFF]/15">
+                ${
+                  qty > 0
+                    ? `<div class="flex items-center justify-between gap-2 p-1 rounded-xl bg-[#000000] text-[#FFFFFF]">
+                        <button
+                          type="button"
+                          onclick="updatePosItemQty('${item.id}', -1)"
+                          class="w-8 h-8 rounded-lg bg-[#333333] hover:bg-[#FF751F] font-eb text-sm flex items-center justify-center cursor-pointer"
+                        >
+                          −
+                        </button>
+                        <span class="text-xs font-eb text-[#FFCB05] tabular-nums">${qty}x (${formatIDR(item.price * qty)})</span>
+                        <button
+                          type="button"
+                          onclick="updatePosItemQty('${item.id}', 1)"
+                          class="w-8 h-8 rounded-lg bg-[#FF751F] hover:bg-[#FFCB05] hover:text-[#000000] font-eb text-sm flex items-center justify-center cursor-pointer"
+                        >
+                          +
+                        </button>
+                      </div>`
+                    : `<button
+                        type="button"
+                        onclick="addPosItem('${item.id}')"
+                        class="zy-btn-primary w-full py-2.5 px-3 text-xs uppercase tracking-wider cursor-pointer"
+                      >
+                        + Pilih
+                      </button>`
+                }
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    function addPosItem(itemId) {
+      const menu = getAllMenus().find(m => m.id === itemId);
+      if (!menu) return;
+      const existing = posCart.find(c => c.id === itemId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        posCart.push({
+          id: menu.id,
+          customerCode: menu.customerCode,
+          platform: menu.platform,
+          name: menu.name,
+          price: menu.price,
+          cashback: menu.cashback,
+          qty: 1
+        });
+      }
+      renderPosMenuGrid();
+      renderPosCheckout();
+    }
+
+    function updatePosItemQty(itemId, delta) {
+      const idx = posCart.findIndex(c => c.id === itemId);
+      if (idx === -1) return;
+      posCart[idx].qty += delta;
+      if (posCart[idx].qty <= 0) {
+        posCart.splice(idx, 1);
+      }
+      renderPosMenuGrid();
+      renderPosCheckout();
+    }
+
+    function clearPosCart() {
+      posCart = [];
+      const cashInput = document.getElementById('posCashReceived');
+      if (cashInput) cashInput.value = '';
+      renderPosMenuGrid();
+      renderPosCheckout();
+    }
+
+    function selectPaymentMethod(method) {
+      posPaymentMethod = method;
+      document.querySelectorAll('.pay-method-btn').forEach(btn => {
+        const active = btn.getAttribute('data-pay-method') === method;
+        if (active) {
+          btn.className = 'pay-method-btn py-2.5 px-2 rounded-xl border border-[#000000] bg-[#FF751F] text-[#FFFFFF] text-xs font-eb uppercase cursor-pointer transition-all';
+        } else {
+          btn.className = 'pay-method-btn py-2.5 px-2 rounded-xl border border-[#000000]/25 dark:border-[#FFFFFF]/25 bg-[#F9F9F9] dark:bg-[#000000] text-[#000000] dark:text-[#FFFFFF] text-xs font-eb uppercase cursor-pointer transition-all';
+        }
+      });
+
+      const cashBox = document.getElementById('posCashCalculatorBox');
+      if (cashBox) {
+        if (method === 'CASH') {
+          cashBox.classList.remove('hidden');
+        } else {
+          cashBox.classList.add('hidden');
+        }
+      }
+    }
+
+    function updatePosCashChange() {
+      const subtotal = posCart.reduce((s, it) => s + it.price * it.qty, 0);
+      const received = Number(document.getElementById('posCashReceived')?.value || 0);
+      const change = Math.max(0, received - subtotal);
+      const changeEl = document.getElementById('posCashChangeText');
+      if (changeEl) {
+        changeEl.textContent = formatIDR(change);
+      }
+    }
+
+    function renderPosCheckout() {
+      const listEl = document.getElementById('posCartItemsList');
+      const codeEl = document.getElementById('posCustomerCode');
+      const totalEl = document.getElementById('posTotalCost');
+      const cbEl = document.getElementById('posTotalCashback');
+
+      if (!listEl) return;
+
+      if (posCart.length === 0) {
+        listEl.innerHTML = `
+          <div class="p-4 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-dashed border-[#000000]/25 dark:border-[#FFFFFF]/25 text-center text-xs font-sb text-[#333333] dark:text-[#F9F9F9]/75">
+            PIlih Menu dan Varian terlebih dahulu
+          </div>
+        `;
+        if (codeEl) codeEl.value = '-';
+        if (totalEl) totalEl.value = 'Rp0';
+        if (cbEl) cbEl.value = 'Rp0';
+        updatePosCashChange();
+        return;
+      }
+
+      const subtotal = posCart.reduce((s, it) => s + it.price * it.qty, 0);
+      const totalCashback = posCart.reduce((s, it) => s + it.cashback * it.qty, 0);
+      const customerCodes = posCart.map(it => it.customerCode).join(', ');
+
+      listEl.innerHTML = posCart
+        .map(
+          it => `
+          <div class="p-3 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/15 dark:border-[#FFFFFF]/20 flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <div class="text-xs font-eb text-[#000000] dark:text-[#FFFFFF] truncate">${it.name}</div>
+              <div class="text-[11px] font-sb text-[#FF751F] tabular-nums">${it.qty}x @ ${formatIDR(it.price)}</div>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <button
+                type="button"
+                onclick="updatePosItemQty('${it.id}', -1)"
+                class="w-7 h-7 rounded-lg border border-[#000000] dark:border-[#FFFFFF] text-xs font-eb flex items-center justify-center hover:bg-[#FFCB05] hover:text-[#000000] cursor-pointer"
+              >
+                −
+              </button>
+              <span class="w-6 text-center text-xs font-eb tabular-nums">${it.qty}</span>
+              <button
+                type="button"
+                onclick="updatePosItemQty('${it.id}', 1)"
+                class="w-7 h-7 rounded-lg border border-[#000000] dark:border-[#FFFFFF] bg-[#FF751F] text-[#FFFFFF] text-xs font-eb flex items-center justify-center hover:bg-[#FFCB05] hover:text-[#000000] cursor-pointer"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        `
+        )
+        .join('');
+
+      if (codeEl) codeEl.value = customerCodes;
+      if (totalEl) totalEl.value = formatIDR(subtotal);
+      if (cbEl) cbEl.value = formatIDR(totalCashback);
+      updatePosCashChange();
+    }
+
+    function handlePosOrderSubmit(event) {
+      event.preventDefault();
+      if (posCart.length === 0) {
+        showToast('PIlih Menu dan Varian terlebih dahulu.');
+        return;
+      }
+
+      const nameInput = document.getElementById('posCustomerName');
+      const timeInput = document.getElementById('posOrderTime');
+      const codeInput = document.getElementById('posCustomerCode');
+      const customerName = nameInput ? nameInput.value.trim() : '';
+
+      if (!customerName) {
+        showToast('Silakan isi Nama Pelanggan.');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      const now = new Date();
+      const subtotal = posCart.reduce((s, it) => s + it.price * it.qty, 0);
+      const totalCashback = posCart.reduce((s, it) => s + it.cashback * it.qty, 0);
+
+      const newOrder = {
+        uid: 'ord-' + Date.now(),
+        customerNo: codeInput ? codeInput.value : posCart.map(it => it.customerCode).join(', '),
+        orderTime: timeInput ? timeInput.value : formatOrderDateTime(now),
+        createdAtISO: now.toISOString(),
+        customerName,
+        paymentMethod: posPaymentMethod,
+        status: 'Menunggu',
+        items: posCart.map(it => ({ ...it })),
+        subtotal,
+        cashback: totalCashback
+      };
+
+      ordersList.unshift(newOrder);
+      saveOrders();
+
+      if (nameInput) nameInput.value = '';
+      const cashInput = document.getElementById('posCashReceived');
+      if (cashInput) cashInput.value = '';
+
+      posCart = [];
+      renderPosMenuGrid();
+      renderPosCheckout();
+      refreshAllDashboardViews();
+      showToast(`Pesanan ${customerName} berhasil dimasukkan ke Progres Pesanan.`);
+    }
+
+    /* PROGRES PESANAN & ANTREAN */
+    function getFilteredOrders() {
+      const period = document.getElementById('orderPeriodFilter')?.value || 'ALL';
+      const status = document.getElementById('orderStatusFilter')?.value || 'ALL';
+      const unit = document.getElementById('orderUnitFilter')?.value || 'ALL';
+      const payment = document.getElementById('orderPaymentFilter')?.value || 'ALL';
+
+      const now = new Date();
+      const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      const sevenDaysAgo = startOfToday - (6 * 86400000);
+
+      return ordersList.filter(o => {
+        const od = parseOrderDate(o);
+        let matchPeriod = true;
+        if (period === 'daily') {
+          matchPeriod =
+            od.getFullYear() === now.getFullYear() &&
+            od.getMonth() === now.getMonth() &&
+            od.getDate() === now.getDate();
+        } else if (period === 'weekly') {
+          matchPeriod = od.getTime() >= sevenDaysAgo;
+        } else if (period === 'monthly') {
+          matchPeriod =
+            od.getFullYear() === now.getFullYear() &&
+            od.getMonth() === now.getMonth();
+        }
+
+        const matchStatus = status === 'ALL' || o.status === status;
+        const matchPayment = payment === 'ALL' || (o.paymentMethod || 'CASH') === payment;
+        const matchUnit = unit === 'ALL' || (o.items || []).some(it => it.platform === unit);
+        return matchPeriod && matchStatus && matchPayment && matchUnit;
+      });
+    }
+
+    function resetOrderFilters() {
+      const periodEl = document.getElementById('orderPeriodFilter');
+      const statusEl = document.getElementById('orderStatusFilter');
+      const unitEl = document.getElementById('orderUnitFilter');
+      const paymentEl = document.getElementById('orderPaymentFilter');
+      if (periodEl) periodEl.value = 'ALL';
+      if (statusEl) statusEl.value = 'ALL';
+      if (unitEl) unitEl.value = 'ALL';
+      if (paymentEl) paymentEl.value = 'ALL';
+      renderOrdersTable();
+    }
+
+    function renderOrdersTable() {
+      const container = document.getElementById('ordersListContainer');
+      if (!container) return;
+
+      const rows = getFilteredOrders();
+      if (rows.length === 0) {
+        container.innerHTML = `
+          <div class="zy-card p-8 text-center space-y-3">
+            <div class="text-sm font-eb text-[#000000] dark:text-[#FFFFFF]">
+              Tidak ada pesanan sesuai pengaturan daftar saat ini.
+            </div>
+            <button
+              type="button"
+              onclick="resetOrderFilters()"
+              class="px-4 py-2 rounded-xl border border-[#000000] dark:border-[#FFFFFF] bg-[#F9F9F9] dark:bg-[#000000] text-xs font-eb text-[#000000] dark:text-[#FFFFFF] hover:bg-[#FFCB05] hover:text-[#000000] transition-colors cursor-pointer"
+            >
+              Reset Pengaturan
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      const statusBadgeStyles = {
+        Menunggu: 'bg-[#FFCB05] text-[#000000] border-[#000000]',
+        Diproses: 'bg-[#FF751F] text-[#FFFFFF] border-[#000000]',
+        Selesai: 'bg-[#000000] text-[#FFCB05] border-[#FFCB05]'
+      };
+
+      container.innerHTML = rows
+        .map(o => {
+          const safeUid = String(o.uid || '').replace(/'/g, "\\'");
+          const badgeClass = statusBadgeStyles[o.status] || statusBadgeStyles.Menunggu;
+          const itemsMarkup = (o.items || [])
+            .map(
+              it => `
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/15 dark:border-[#FFFFFF]/20 text-[11px] font-sb text-[#000000] dark:text-[#FFFFFF]">
+                  <span class="font-eb text-[#FF751F]">${it.qty}x</span>
+                  <span>${it.name}</span>
+                </span>
+              `
+            )
+            .join('');
+
+          return `
+            <article class="zy-card p-4 sm:p-5 space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                <div class="space-y-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <h3 class="text-base font-eb text-[#000000] dark:text-[#FFFFFF] break-words">${o.customerName}</h3>
+                    <span class="px-2.5 py-0.5 rounded-full border text-[10px] font-eb uppercase tracking-wider ${badgeClass}">
+                      ${o.status}
+                    </span>
+                  </div>
+                  <div class="text-[11px] font-eb text-[#FF751F] break-all">${o.customerNo}</div>
+                  <div class="text-[11px] font-sb text-[#333333] dark:text-[#F9F9F9]/75 tabular-nums">${o.orderTime} WITA</div>
+                </div>
+
+                <div class="sm:text-right shrink-0">
+                  <div class="text-base sm:text-lg font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums">${formatIDR(o.subtotal)}</div>
+                  <div class="text-[11px] font-eb text-[#FF751F] tabular-nums">Cashback ${formatIDR(o.cashback)}</div>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5">${itemsMarkup}</div>
+
+              <div class="pt-3 border-t border-[#000000]/10 dark:border-[#FFFFFF]/15 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <select
+                    aria-label="Ubah Status Pesanan"
+                    onchange="updateOrderStatus('${safeUid}', this.value)"
+                    class="px-3 py-2 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+                  >
+                    <option value="Menunggu" ${o.status === 'Menunggu' ? 'selected' : ''}>Menunggu</option>
+                    <option value="Diproses" ${o.status === 'Diproses' ? 'selected' : ''}>Diproses</option>
+                    <option value="Selesai" ${o.status === 'Selesai' ? 'selected' : ''}>Selesai</option>
+                  </select>
+
+                  <select
+                    aria-label="Ubah Metode Pembayaran"
+                    onchange="updateOrderPaymentMethod('${safeUid}', this.value)"
+                    class="px-3 py-2 rounded-xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-xs font-eb text-[#000000] dark:text-[#FFFFFF] focus:outline-none focus:border-[#FF751F]"
+                  >
+                    <option value="CASH" ${(o.paymentMethod || 'CASH') === 'CASH' ? 'selected' : ''}>CASH</option>
+                    <option value="QRIS" ${o.paymentMethod === 'QRIS' ? 'selected' : ''}>QRIS</option>
+                    <option value="TRANSFER" ${o.paymentMethod === 'TRANSFER' ? 'selected' : ''}>TRANSFER</option>
+                  </select>
+                </div>
+
+                <div class="flex items-center gap-2 flex-wrap">
+                  <button
+                    type="button"
+                    onclick="openOrderReceiptModal('${safeUid}')"
+                    class="px-3 py-2 rounded-xl border border-[#000000] dark:border-[#FFFFFF] bg-[#F9F9F9] dark:bg-[#000000] text-[11px] font-eb text-[#000000] dark:text-[#FFFFFF] hover:bg-[#FFCB05] hover:text-[#000000] transition-colors cursor-pointer"
+                  >
+                    Invoice
+                  </button>
+                  <button
+                    type="button"
+                    onclick="confirmDeleteOrder('${safeUid}')"
+                    class="px-3 py-2 rounded-xl border border-[#000000]/25 dark:border-[#FFFFFF]/25 bg-transparent text-[11px] font-eb text-[#333333] dark:text-[#F9F9F9] hover:border-[#FF751F] hover:text-[#FF751F] transition-colors cursor-pointer"
+                  >
+                    Hapus
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    function updateOrderStatus(uid, newStatus) {
+      const target = ordersList.find(o => o.uid === uid);
+      if (!target) return;
+      target.status = newStatus;
+      saveOrders();
+      refreshAllDashboardViews();
+      showToast(`Status pesanan ${target.customerName} diubah ke ${newStatus}.`);
+    }
+
+    function updateOrderPaymentMethod(uid, newMethod) {
+      const target = ordersList.find(o => o.uid === uid);
+      if (!target) return;
+      target.paymentMethod = newMethod;
+      saveOrders();
+      refreshAllDashboardViews();
+      showToast(`Metode pembayaran diubah ke ${newMethod}.`);
+    }
+
+    function sendOrderWhatsAppByUid(uid) {
+      const target = ordersList.find(o => o.uid === uid);
+      if (!target) return;
+      const lines = [
+        '*NOTA PESANAN GO-ZY*',
+        '_Siap Sedia, Buat Ceria_',
+        '--------------------------------',
+        `*NOMOR PELANGGAN:* ${target.customerNo}`,
+        `*WAKTU PESANAN:* ${target.orderTime}`,
+        `*NAMA PELANGGAN:* ${target.customerName}`,
+        `*METODE PEMBAYARAN:* ${target.paymentMethod || 'CASH'}`,
+        `*STATUS:* ${target.status}`,
+        '--------------------------------',
+        ...(target.items || []).map(it => `- ${it.qty}x ${it.name} (${formatIDR(it.price * it.qty)})`),
+        '--------------------------------',
+        `*TOTAL BIAYA:* ${formatIDR(target.subtotal)}`,
+        `*CASHBACK:* ${formatIDR(target.cashback)}`,
+        '--------------------------------',
+        'Jl. By Pass Mataram - Batujai Km. 6, Praya Barat'
+      ].join('\n');
+
+      const waUrl = `https://wa.me/${WHATSAPP_ADMIN_NUMBER}?text=${encodeURIComponent(lines)}`;
+      const popup = window.open(waUrl, '_blank', 'noopener,noreferrer');
+      if (!popup) {
+        window.location.href = waUrl;
+      }
+    }
+
+    function confirmDeleteOrder(uid) {
+      const target = ordersList.find(o => o.uid === uid);
+      if (!target) return;
+      openDeleteModal(`Hapus pesanan atas nama "${target.customerName}"?`, () => {
+        ordersList = ordersList.filter(o => o.uid !== uid);
+        saveOrders();
+        refreshAllDashboardViews();
+        showToast('Pesanan berhasil dihapus.');
+      });
+    }
+
+    function printOrdersProgressPdf() {
+      const rows = getFilteredOrders();
+      if (rows.length === 0) {
+        showToast('Tidak ada data pesanan untuk dicetak.');
+        return;
+      }
+
+      const sheet = document.getElementById('printableOrdersSheet');
+      if (!sheet) return;
+
+      const periodVal = document.getElementById('orderPeriodFilter')?.value || 'ALL';
+      const statusVal = document.getElementById('orderStatusFilter')?.value || 'ALL';
+      const unitVal = document.getElementById('orderUnitFilter')?.value || 'ALL';
+      const methodVal = document.getElementById('orderPaymentFilter')?.value || 'ALL';
+
+      const periodLabels = {
+        ALL: 'Semua Periode',
+        daily: 'Harian (Hari Ini)',
+        weekly: 'Mingguan (7 Hari Terakhir)',
+        monthly: 'Bulanan (Bulan Ini)'
+      };
+
+      const totalGross = rows.reduce((s, o) => s + Number(o.subtotal || 0), 0);
+      const totalCb = rows.reduce((s, o) => s + Number(o.cashback || 0), 0);
+      const totalServices = rows.reduce(
+        (s, o) => s + (o.items || []).reduce((acc, it) => acc + Number(it.qty || 0), 0),
+        0
+      );
+      const printedNow = formatOrderDateTime(new Date());
+
+      sheet.innerHTML = `
+        <div class="flex items-center justify-between gap-4 pb-4 border-b-2 border-[#000000]">
+          <div class="flex items-center gap-3">
+            <img
+              src="https://res.cloudinary.com/ddtgjvetf/image/upload/v1794708549/Glossy_Orange-Gold_3D_G_Arrow_Logo-removebg-preview_sg27r6.png"
+              alt="GO-ZY"
+              class="h-11 w-auto object-contain"
+            />
+            <div>
+              <div class="text-lg font-eb text-[#000000]">GO-<span class="text-[#FF751F]">ZY</span> — PROGRES PESANAN</div>
+              <div class="text-[10px] font-sb text-[#333333]">Jl. By Pass Mataram - Batujai Km. 6, Praya Barat (83572)</div>
+            </div>
+          </div>
+          <div class="text-right text-[10px] font-sb text-[#333333]">
+            <div class="font-eb text-xs text-[#000000]">${periodLabels[periodVal] || 'Semua Periode'}</div>
+            <div>Status: ${statusVal === 'ALL' ? 'Semua' : statusVal} | Menu: ${unitVal === 'ALL' ? 'Semua' : unitVal} | Metode: ${methodVal === 'ALL' ? 'Semua' : methodVal}</div>
+            <div>Dicetak: ${printedNow} WITA</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-4 gap-2.5 my-4">
+          <div class="p-3 rounded-xl border border-[#000000] bg-[#F9F9F9]">
+            <div class="text-[9px] font-eb uppercase text-[#333333]">Jumlah Pesanan</div>
+            <div class="text-sm font-eb text-[#000000] mt-0.5 tabular-nums">${rows.length} Pesanan</div>
+          </div>
+          <div class="p-3 rounded-xl border border-[#000000] bg-[#F9F9F9]">
+            <div class="text-[9px] font-eb uppercase text-[#333333]">Total Layanan</div>
+            <div class="text-sm font-eb text-[#000000] mt-0.5 tabular-nums">${totalServices} Layanan</div>
+          </div>
+          <div class="p-3 rounded-xl border border-[#000000] bg-[#F9F9F9]">
+            <div class="text-[9px] font-eb uppercase text-[#333333]">Total Biaya</div>
+            <div class="text-sm font-eb text-[#FF751F] mt-0.5 tabular-nums">${formatIDR(totalGross)}</div>
+          </div>
+          <div class="p-3 rounded-xl border border-[#000000] bg-[#FFCB05]/40">
+            <div class="text-[9px] font-eb uppercase text-[#333333]">Total Cashback</div>
+            <div class="text-sm font-eb text-[#000000] mt-0.5 tabular-nums">${formatIDR(totalCb)}</div>
+          </div>
+        </div>
+
+        <table class="w-full text-[11px] border-collapse border border-[#000000]">
+          <thead>
+            <tr class="bg-[#F9F9F9] border-b border-[#000000] text-[10px] font-eb uppercase">
+              <th class="py-2 px-2 border-r border-[#000000] text-left">No</th>
+              <th class="py-2 px-2 border-r border-[#000000] text-left">Waktu</th>
+              <th class="py-2 px-2 border-r border-[#000000] text-left">Pelanggan</th>
+              <th class="py-2 px-2 border-r border-[#000000] text-left">Rincian Menu</th>
+              <th class="py-2 px-2 border-r border-[#000000] text-center">Metode</th>
+              <th class="py-2 px-2 border-r border-[#000000] text-center">Status</th>
+              <th class="py-2 px-2 border-r border-[#000000] text-right">Total</th>
+              <th class="py-2 px-2 text-right">Cashback</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#000000]/30">
+            ${rows
+              .map((o, idx) => {
+                const itemsText = (o.items || []).map(it => `${it.qty}x ${it.name}`).join(', ');
+                return `
+                  <tr>
+                    <td class="py-1.5 px-2 border-r border-[#000000]/30 font-sb">${idx + 1}</td>
+                    <td class="py-1.5 px-2 border-r border-[#000000]/30 font-sb tabular-nums">${o.orderTime}</td>
+                    <td class="py-1.5 px-2 border-r border-[#000000]/30 font-eb">${o.customerName}</td>
+                    <td class="py-1.5 px-2 border-r border-[#000000]/30 font-sb">${itemsText}</td>
+                    <td class="py-1.5 px-2 border-r border-[#000000]/30 text-center font-eb">${o.paymentMethod || 'CASH'}</td>
+                    <td class="py-1.5 px-2 border-r border-[#000000]/30 text-center font-eb">${o.status}</td>
+                    <td class="py-1.5 px-2 border-r border-[#000000]/30 text-right font-eb tabular-nums">${formatIDR(o.subtotal)}</td>
+                    <td class="py-1.5 px-2 text-right font-sb tabular-nums">${formatIDR(o.cashback)}</td>
+                  </tr>
+                `;
+              })
+              .join('')}
+          </tbody>
+        </table>
+      `;
+
+      const originalTitle = document.title;
+      document.title = `Progres-Pesanan-GO-ZY-${toISODateLocal(new Date())}`;
+      document.body.classList.add('printing-orders');
+
+      const cleanupPrint = () => {
+        document.body.classList.remove('printing-orders');
+        document.title = originalTitle;
+        window.removeEventListener('afterprint', cleanupPrint);
+      };
+
+      window.addEventListener('afterprint', cleanupPrint);
+      window.print();
+      setTimeout(cleanupPrint, 1000);
+    }
+
+    /* MONEV & GRAFIK */
+    function setMonevChartPeriod(period) {
+      monevChartPeriod = period;
+      document.querySelectorAll('.chart-period-btn').forEach(btn => {
+        const active = btn.getAttribute('data-chart-period') === period;
+        if (active) {
+          btn.className = 'chart-period-btn px-3.5 py-1.5 rounded-xl text-xs font-eb uppercase bg-[#FF751F] text-[#FFFFFF] border border-[#000000] cursor-pointer';
+        } else {
+          btn.className = 'chart-period-btn px-3.5 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer';
+        }
+      });
+      renderMonevChart();
+    }
+
+    function renderMonevDashboard() {
+      const now = new Date();
+      const startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+      const sevenDaysAgo = startToday - 6 * 86400000;
+
+      let dailySum = 0;
+      let weeklySum = 0;
+      let monthlySum = 0;
+      let allSum = 0;
+
+      const payTotals = { CASH: 0, QRIS: 0, TRANSFER: 0 };
+      const unitTotals = { 'GO-CARWASH': 0, 'GO-BARBERSHOP': 0, 'GO-CAFE': 0 };
+      const serviceCounts = {};
+      getAllMenus().forEach(m => {
+        serviceCounts[m.id] = {
+          id: m.id,
+          platform: m.platform,
+          name: m.name,
+          customerCode: m.customerCode,
+          qty: 0,
+          revenue: 0
+        };
+      });
+
+      ordersList.forEach(o => {
+        const d = parseOrderDate(o);
+        const sub = Number(o.subtotal || 0);
+        allSum += sub;
+
+        if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth() && d.getDate() === now.getDate()) {
+          dailySum += sub;
+        }
+        if (d.getTime() >= sevenDaysAgo) {
+          weeklySum += sub;
+        }
+        if (d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth()) {
+          monthlySum += sub;
+        }
+
+        const method = o.paymentMethod || 'CASH';
+        payTotals[method] = (payTotals[method] || 0) + sub;
+
+        (o.items || []).forEach(it => {
+          const lineRev = Number(it.price || 0) * Number(it.qty || 0);
+          unitTotals[it.platform] = (unitTotals[it.platform] || 0) + lineRev;
+
+          if (!serviceCounts[it.id]) {
+            serviceCounts[it.id] = {
+              id: it.id,
+              platform: it.platform,
+              name: it.name,
+              customerCode: it.customerCode || '-',
+              qty: 0,
+              revenue: 0
+            };
+          }
+          serviceCounts[it.id].qty += Number(it.qty || 0);
+          serviceCounts[it.id].revenue += lineRev;
+        });
+      });
+
+      document.getElementById('monevIncomeDaily').textContent = formatIDR(dailySum);
+      document.getElementById('monevIncomeWeekly').textContent = formatIDR(weeklySum);
+      document.getElementById('monevIncomeMonthly').textContent = formatIDR(monthlySum);
+      document.getElementById('monevIncomeAll').textContent = formatIDR(allSum);
+
+      const payContainer = document.getElementById('monevPaymentBreakdown');
+      if (payContainer) {
+        payContainer.innerHTML = ['CASH', 'QRIS', 'TRANSFER']
+          .map(m => {
+            const val = payTotals[m] || 0;
+            const pct = allSum > 0 ? Math.round((val / allSum) * 100) : 0;
+            return `
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-eb text-[#000000] dark:text-[#FFFFFF]">${m}</span>
+                  <span class="font-eb text-[#FF751F] tabular-nums">${formatIDR(val)} (${pct}%)</span>
+                </div>
+                <div class="h-2.5 rounded-full bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/15 dark:border-[#FFFFFF]/15 overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-[#FF751F] to-[#FFCB05]" style="width: ${pct}%;"></div>
+                </div>
+              </div>
+            `;
+          })
+          .join('');
+      }
+
+      const unitContainer = document.getElementById('monevUnitBreakdown');
+      if (unitContainer) {
+        unitContainer.innerHTML = ['GO-CARWASH', 'GO-BARBERSHOP', 'GO-CAFE']
+          .map(u => {
+            const val = unitTotals[u] || 0;
+            const pct = allSum > 0 ? Math.round((val / allSum) * 100) : 0;
+            return `
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-eb text-[#000000] dark:text-[#FFFFFF]">${u}</span>
+                  <span class="font-eb text-[#FF751F] tabular-nums">${formatIDR(val)} (${pct}%)</span>
+                </div>
+                <div class="h-2.5 rounded-full bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/15 dark:border-[#FFFFFF]/15 overflow-hidden">
+                  <div class="h-full bg-[#FF751F]" style="width: ${pct}%;"></div>
+                </div>
+              </div>
+            `;
+          })
+          .join('');
+      }
+
+      const serviceList = Object.values(serviceCounts).sort((a, b) => b.qty - a.qty);
+      const totalAllServicesQty = serviceList.reduce((s, item) => s + item.qty, 0);
+      const grandBadge = document.getElementById('monevGrandServiceTotal');
+      if (grandBadge) grandBadge.textContent = `Total: ${totalAllServicesQty} Layanan`;
+
+      const tbody = document.getElementById('monevServiceBreakdownBody');
+      if (tbody) {
+        tbody.innerHTML = serviceList
+          .map(
+            s => `
+            <tr>
+              <td class="py-2.5 px-3 font-eb text-[11px] text-[#FF751F]">${s.platform}</td>
+              <td class="py-2.5 px-3 font-eb text-[#000000] dark:text-[#FFFFFF]">${s.name}</td>
+              <td class="py-2.5 px-3 font-sb text-[#333333] dark:text-[#F9F9F9]/75">${s.customerCode}</td>
+              <td class="py-2.5 px-3 text-right font-eb text-[#000000] dark:text-[#FFFFFF] tabular-nums">${s.qty}x</td>
+              <td class="py-2.5 px-3 text-right font-eb text-[#FF751F] tabular-nums">${formatIDR(s.revenue)}</td>
+            </tr>
+          `
+          )
+          .join('');
+      }
+
+      renderMonevChart();
+    }
+
+    function renderMonevChart() {
+      const container = document.getElementById('monevChartCanvas');
+      const titleEl = document.getElementById('monevChartTitle');
+      const totalBadge = document.getElementById('monevChartTotalBadge');
+      if (!container) return;
+
+      const now = new Date();
+      const buckets = [];
+
+      if (monevChartPeriod === 'daily') {
+        if (titleEl) titleEl.textContent = 'Grafik Pemasukan Harian (7 Hari Terakhir)';
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+          const label = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+          const sum = ordersList
+            .filter(o => {
+              const od = parseOrderDate(o);
+              return od.getFullYear() === d.getFullYear() && od.getMonth() === d.getMonth() && od.getDate() === d.getDate();
+            })
+            .reduce((s, o) => s + Number(o.subtotal || 0), 0);
+          buckets.push({ label, value: sum });
+        }
+      } else if (monevChartPeriod === 'weekly') {
+        if (titleEl) titleEl.textContent = 'Grafik Pemasukan Mingguan (4 Minggu Terakhir)';
+        for (let w = 3; w >= 0; w--) {
+          const endMs = new Date(now.getFullYear(), now.getMonth(), now.getDate() - w * 7, 23, 59, 59).getTime();
+          const startMs = endMs - 7 * 86400000 + 1000;
+          const sum = ordersList
+            .filter(o => {
+              const t = parseOrderDate(o).getTime();
+              return t >= startMs && t <= endMs;
+            })
+            .reduce((s, o) => s + Number(o.subtotal || 0), 0);
+          buckets.push({ label: `Minggu -${w === 0 ? 'Ini' : w}`, value: sum });
+        }
+      } else {
+        if (titleEl) titleEl.textContent = 'Grafik Pemasukan Bulanan (6 Bulan Terakhir)';
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        for (let m = 5; m >= 0; m--) {
+          const d = new Date(now.getFullYear(), now.getMonth() - m, 1);
+          const sum = ordersList
+            .filter(o => {
+              const od = parseOrderDate(o);
+              return od.getFullYear() === d.getFullYear() && od.getMonth() === d.getMonth();
+            })
+            .reduce((s, o) => s + Number(o.subtotal || 0), 0);
+          buckets.push({ label: `${monthNames[d.getMonth()]} ${String(d.getFullYear()).slice(-2)}`, value: sum });
+        }
+      }
+
+      const maxVal = Math.max(...buckets.map(b => b.value), 1);
+      const periodTotal = buckets.reduce((s, b) => s + b.value, 0);
+      if (totalBadge) totalBadge.textContent = `Total: ${formatIDR(periodTotal)}`;
+
+      container.innerHTML = `
+        <div class="grid grid-cols-${buckets.length} gap-2 sm:gap-4 items-end h-56 pt-6 px-2 border-b border-[#000000]/20 dark:border-[#FFFFFF]/20">
+          ${buckets
+            .map(b => {
+              const heightPct = b.value > 0 ? Math.max(12, Math.round((b.value / maxVal) * 100)) : 4;
+              const shortVal =
+                b.value >= 1000000
+                  ? (b.value / 1000000).toFixed(1) + 'jt'
+                  : b.value >= 1000
+                    ? Math.round(b.value / 1000) + 'rb'
+                    : '0';
+              return `
+                <div class="flex flex-col items-center justify-end h-full gap-1.5">
+                  <span class="text-[10px] font-eb text-[#FF751F] tabular-nums">${shortVal}</span>
+                  <div
+                    title="${b.label}: ${formatIDR(b.value)}"
+                    class="w-full max-w-[46px] rounded-t-xl border border-[#000000] dark:border-[#FFFFFF] bg-gradient-to-t from-[#FF751F] to-[#FFCB05] transition-all duration-300"
+                    style="height: ${heightPct}%;"
+                  ></div>
+                  <span class="text-[10px] sm:text-xs font-eb text-[#000000] dark:text-[#FFFFFF] text-center truncate w-full">${b.label}</span>
+                </div>
+              `;
+            })
+            .join('')}
+        </div>
+      `;
+    }
+
+    /* CETAK PEMBUKUAN A4 */
+    function setBookkeepingPeriod(period) {
+      bookkeepingPeriod = period;
+      document.querySelectorAll('.bk-period-btn').forEach(btn => {
+        const active = btn.getAttribute('data-bk-period') === period;
+        if (active) {
+          btn.className = 'bk-period-btn px-3 py-1.5 rounded-xl text-xs font-eb uppercase bg-[#FF751F] text-[#FFFFFF] border border-[#000000] cursor-pointer';
+        } else {
+          btn.className = 'bk-period-btn px-3 py-1.5 rounded-xl text-xs font-sb uppercase text-[#000000] dark:text-[#FFFFFF] cursor-pointer';
+        }
+      });
+
+      const datePicker = document.getElementById('bkDatePicker');
+      const monthPicker = document.getElementById('bkMonthPicker');
+      if (period === 'monthly') {
+        if (datePicker) datePicker.classList.add('hidden');
+        if (monthPicker) monthPicker.classList.remove('hidden');
+      } else if (period === 'all') {
+        if (datePicker) datePicker.classList.add('hidden');
+        if (monthPicker) monthPicker.classList.add('hidden');
+      } else {
+        if (datePicker) datePicker.classList.remove('hidden');
+        if (monthPicker) monthPicker.classList.add('hidden');
+      }
+
+      renderBookkeepingSheet();
+    }
+
+    function getBookkeepingReportData() {
+      const dateVal = document.getElementById('bkDatePicker')?.value || toISODateLocal(new Date());
+      const monthVal = document.getElementById('bkMonthPicker')?.value || toISOMonthLocal(new Date());
+
+      let periodTitle = 'LAPORAN PEMBUKUAN KESELURUHAN';
+      let filtered = [...ordersList];
+
+      if (bookkeepingPeriod === 'daily') {
+        const [yy, mm, dd] = dateVal.split('-').map(Number);
+        periodTitle = `LAPORAN PEMBUKUAN HARIAN (${String(dd).padStart(2, '0')}/${String(mm).padStart(2, '0')}/${yy})`;
+        filtered = ordersList.filter(o => {
+          const d = parseOrderDate(o);
+          return d.getFullYear() === yy && d.getMonth() + 1 === mm && d.getDate() === dd;
+        });
+      } else if (bookkeepingPeriod === 'weekly') {
+        const [yy, mm, dd] = dateVal.split('-').map(Number);
+        const endDate = new Date(yy, mm - 1, dd, 23, 59, 59);
+        const startDate = new Date(yy, mm - 1, dd - 6, 0, 0, 0);
+        periodTitle = `LAPORAN PEMBUKUAN MINGGUAN (${formatOrderDateTime(startDate).slice(0, 10)} s/d ${formatOrderDateTime(endDate).slice(0, 10)})`;
+        filtered = ordersList.filter(o => {
+          const t = parseOrderDate(o).getTime();
+          return t >= startDate.getTime() && t <= endDate.getTime();
+        });
+      } else if (bookkeepingPeriod === 'monthly') {
+        const [yy, mm] = monthVal.split('-').map(Number);
+        periodTitle = `LAPORAN PEMBUKUAN BULANAN (${String(mm).padStart(2, '0')}/${yy})`;
+        filtered = ordersList.filter(o => {
+          const d = parseOrderDate(o);
+          return d.getFullYear() === yy && d.getMonth() + 1 === mm;
+        });
+      }
+
+      const totalGross = filtered.reduce((s, o) => s + Number(o.subtotal || 0), 0);
+      const totalCashback = filtered.reduce((s, o) => s + Number(o.cashback || 0), 0);
+      const totalNet = totalGross - totalCashback;
+      const totalServices = filtered.reduce(
+        (s, o) => s + (o.items || []).reduce((acc, it) => acc + Number(it.qty || 0), 0),
+        0
+      );
+
+      const methodSummary = { CASH: 0, QRIS: 0, TRANSFER: 0 };
+      const serviceSummaryMap = {};
+
+      filtered.forEach(o => {
+        const m = o.paymentMethod || 'CASH';
+        methodSummary[m] = (methodSummary[m] || 0) + Number(o.subtotal || 0);
+        (o.items || []).forEach(it => {
+          if (!serviceSummaryMap[it.name]) {
+            serviceSummaryMap[it.name] = { name: it.name, platform: it.platform, qty: 0, total: 0 };
+          }
+          serviceSummaryMap[it.name].qty += Number(it.qty || 0);
+          serviceSummaryMap[it.name].total += Number(it.price || 0) * Number(it.qty || 0);
+        });
+      });
+
+      const serviceRows = Object.values(serviceSummaryMap).sort((a, b) => b.qty - a.qty);
+      const printedTimestamp = formatOrderDateTime(new Date());
+
+      return {
+        periodTitle,
+        filtered,
+        totalGross,
+        totalCashback,
+        totalNet,
+        totalServices,
+        methodSummary,
+        serviceRows,
+        printedTimestamp
+      };
+    }
+
+    function renderBookkeepingSheet() {
+      const sheet = document.getElementById('printableBookkeepingSheet');
+      if (!sheet) return;
+
+      const {
+        periodTitle,
+        filtered,
+        totalGross,
+        totalCashback,
+        totalNet,
+        totalServices,
+        methodSummary,
+        serviceRows,
+        printedTimestamp
+      } = getBookkeepingReportData();
+
+      sheet.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-[#000000]">
+          <div class="flex items-center gap-3">
+            <img
+              src="https://res.cloudinary.com/ddtgjvetf/image/upload/v1794708549/Glossy_Orange-Gold_3D_G_Arrow_Logo-removebg-preview_sg27r6.png"
+              alt="GO-ZY"
+              class="h-12 w-auto object-contain"
+            />
+            <div>
+              <div class="text-xl font-eb text-[#000000]">GO-<span class="text-[#FF751F]">ZY</span></div>
+              <div class="text-[11px] font-sb text-[#333333]">Siap Sedia, Buat Ceria</div>
+              <div class="text-[10px] font-sb text-[#333333]">Jl. By Pass Mataram - Batujai Km. 6, Praya Barat (83572)</div>
+            </div>
+          </div>
+          <div class="sm:text-right">
+            <div class="text-xs font-eb uppercase text-[#000000]">${periodTitle}</div>
+            <div class="text-[10px] font-sb text-[#333333] mt-0.5">Dicetak: ${printedTimestamp} WITA</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="p-3.5 rounded-xl border border-[#000000] bg-[#F9F9F9]">
+            <div class="text-[10px] font-eb uppercase text-[#333333]">Pemasukan Kotor</div>
+            <div class="text-base font-eb text-[#FF751F] mt-1 tabular-nums">${formatIDR(totalGross)}</div>
+          </div>
+          <div class="p-3.5 rounded-xl border border-[#000000] bg-[#F9F9F9]">
+            <div class="text-[10px] font-eb uppercase text-[#333333]">Total Cashback</div>
+            <div class="text-base font-eb text-[#000000] mt-1 tabular-nums">${formatIDR(totalCashback)}</div>
+          </div>
+          <div class="p-3.5 rounded-xl border border-[#000000] bg-[#FFCB05]/40">
+            <div class="text-[10px] font-eb uppercase text-[#333333]">Pemasukan Bersih</div>
+            <div class="text-base font-eb text-[#000000] mt-1 tabular-nums">${formatIDR(totalNet)}</div>
+          </div>
+          <div class="p-3.5 rounded-xl border border-[#000000] bg-[#F9F9F9]">
+            <div class="text-[10px] font-eb uppercase text-[#333333]">Transaksi &amp; Layanan</div>
+            <div class="text-base font-eb text-[#000000] mt-1 tabular-nums">${filtered.length} Tx / ${totalServices} Layanan</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div class="p-3 rounded-xl border border-[#000000]/40">
+            <div class="text-[10px] font-eb uppercase text-[#333333]">Pembayaran CASH</div>
+            <div class="text-sm font-eb text-[#000000] mt-0.5 tabular-nums">${formatIDR(methodSummary.CASH || 0)}</div>
+          </div>
+          <div class="p-3 rounded-xl border border-[#000000]/40">
+            <div class="text-[10px] font-eb uppercase text-[#333333]">Pembayaran QRIS</div>
+            <div class="text-sm font-eb text-[#000000] mt-0.5 tabular-nums">${formatIDR(methodSummary.QRIS || 0)}</div>
+          </div>
+          <div class="p-3 rounded-xl border border-[#000000]/40">
+            <div class="text-[10px] font-eb uppercase text-[#333333]">Pembayaran TRANSFER</div>
+            <div class="text-sm font-eb text-[#000000] mt-0.5 tabular-nums">${formatIDR(methodSummary.TRANSFER || 0)}</div>
+          </div>
+        </div>
+
+        <!-- Rekap Layanan -->
+        <div class="space-y-2">
+          <h3 class="text-xs font-eb uppercase tracking-wider text-[#000000]">
+            Rekapitulasi Layanan Dipesan
+          </h3>
+          <table class="w-full text-[11px] border-collapse border border-[#000000]">
+            <thead>
+              <tr class="bg-[#F9F9F9] border-b border-[#000000] text-[10px] font-eb uppercase">
+                <th class="py-2 px-2.5 border-r border-[#000000] text-left">Unit</th>
+                <th class="py-2 px-2.5 border-r border-[#000000] text-left">Nama Layanan</th>
+                <th class="py-2 px-2.5 border-r border-[#000000] text-right">Jumlah</th>
+                <th class="py-2 px-2.5 text-right">Total Nominal</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#000000]/30">
+              ${
+                serviceRows.length > 0
+                  ? serviceRows
+                      .map(
+                        sr => `
+                      <tr>
+                        <td class="py-1.5 px-2.5 border-r border-[#000000]/30 font-eb">${sr.platform}</td>
+                        <td class="py-1.5 px-2.5 border-r border-[#000000]/30 font-sb">${sr.name}</td>
+                        <td class="py-1.5 px-2.5 border-r border-[#000000]/30 text-right font-eb tabular-nums">${sr.qty}x</td>
+                        <td class="py-1.5 px-2.5 text-right font-eb tabular-nums">${formatIDR(sr.total)}</td>
+                      </tr>
+                    `
+                      )
+                      .join('')
+                  : `<tr><td colspan="4" class="py-3 px-2.5 text-center font-sb">Belum ada layanan pada periode ini.</td></tr>`
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Jurnal Transaksi -->
+        <div class="space-y-2">
+          <h3 class="text-xs font-eb uppercase tracking-wider text-[#000000]">
+            Jurnal Rincian Transaksi
+          </h3>
+          <table class="w-full text-[11px] border-collapse border border-[#000000]">
+            <thead>
+              <tr class="bg-[#F9F9F9] border-b border-[#000000] text-[10px] font-eb uppercase">
+                <th class="py-2 px-2 border-r border-[#000000] text-left">No</th>
+                <th class="py-2 px-2 border-r border-[#000000] text-left">Waktu</th>
+                <th class="py-2 px-2 border-r border-[#000000] text-left">Pelanggan</th>
+                <th class="py-2 px-2 border-r border-[#000000] text-left">Layanan</th>
+                <th class="py-2 px-2 border-r border-[#000000] text-center">Metode</th>
+                <th class="py-2 px-2 border-r border-[#000000] text-right">Total</th>
+                <th class="py-2 px-2 text-right">Cashback</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#000000]/30">
+              ${
+                filtered.length > 0
+                  ? filtered
+                      .map((o, idx) => {
+                        const itemsTxt = (o.items || []).map(it => `${it.qty}x ${it.name}`).join(', ');
+                        return `
+                          <tr>
+                            <td class="py-1.5 px-2 border-r border-[#000000]/30 font-sb">${idx + 1}</td>
+                            <td class="py-1.5 px-2 border-r border-[#000000]/30 font-sb tabular-nums">${o.orderTime}</td>
+                            <td class="py-1.5 px-2 border-r border-[#000000]/30 font-eb">${o.customerName}</td>
+                            <td class="py-1.5 px-2 border-r border-[#000000]/30 font-sb">${itemsTxt}</td>
+                            <td class="py-1.5 px-2 border-r border-[#000000]/30 text-center font-eb">${o.paymentMethod || 'CASH'}</td>
+                            <td class="py-1.5 px-2 border-r border-[#000000]/30 text-right font-eb tabular-nums">${formatIDR(o.subtotal)}</td>
+                            <td class="py-1.5 px-2 text-right font-sb tabular-nums">${formatIDR(o.cashback)}</td>
+                          </tr>
+                        `;
+                      })
+                      .join('')
+                  : `<tr><td colspan="7" class="py-4 px-2 text-center font-sb">Belum ada transaksi tercatat pada periode ini.</td></tr>`
+              }
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function fitCanvasEllipsis(ctx, text, maxWidth) {
+      const str = String(text ?? '');
+      if (ctx.measureText(str).width <= maxWidth) return str;
+      let trimmed = str;
+      while (trimmed.length > 0 && ctx.measureText(trimmed + '…').width > maxWidth) {
+        trimmed = trimmed.slice(0, -1);
+      }
+      return trimmed ? trimmed + '…' : '';
+    }
+
+    function drawRoundedRectCanvas(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    async function printBookkeepingPdf() {
+      const logoImg = await loadInvoiceLogoImage();
+      const {
+        periodTitle,
+        filtered,
+        totalGross,
+        totalCashback,
+        totalNet,
+        totalServices,
+        methodSummary,
+        serviceRows,
+        printedTimestamp
+      } = getBookkeepingReportData();
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const width = 1240;
+      const height = 1754;
+      const pad = 56;
+      const cw = width - pad * 2;
+
+      canvas.width = width;
+      canvas.height = height;
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.textBaseline = 'top';
+      let y = pad;
+
+      // Kop Laporan
+      let logoOffset = 0;
+      if (logoImg && logoImg.naturalWidth > 0 && logoImg.naturalHeight > 0) {
+        const logoH = 68;
+        const logoW = (logoImg.naturalWidth / logoImg.naturalHeight) * logoH;
+        ctx.drawImage(logoImg, pad, y, logoW, logoH);
+        logoOffset = logoW + 18;
+      }
+
+      ctx.font = '800 30px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.fillText('GO-', pad + logoOffset, y + 2);
+      const goW = ctx.measureText('GO-').width;
+      ctx.fillStyle = '#FF751F';
+      ctx.fillText('ZY', pad + logoOffset + goW, y + 2);
+
+      ctx.font = '600 14px Montserrat, sans-serif';
+      ctx.fillStyle = '#333333';
+      ctx.fillText('Siap Sedia, Buat Ceria', pad + logoOffset, y + 36);
+
+      ctx.font = '600 12px Montserrat, sans-serif';
+      ctx.fillStyle = '#333333';
+      ctx.fillText('Jl. By Pass Mataram - Batujai Km. 6, Praya Barat (83572)', pad + logoOffset, y + 55);
+
+      ctx.font = '800 14px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      const rightTitle = fitCanvasEllipsis(ctx, periodTitle, cw * 0.48);
+      ctx.fillText(rightTitle, width - pad - ctx.measureText(rightTitle).width, y + 14);
+
+      ctx.font = '600 12px Montserrat, sans-serif';
+      ctx.fillStyle = '#333333';
+      const rightDate = `Dicetak: ${printedTimestamp} WITA`;
+      ctx.fillText(rightDate, width - pad - ctx.measureText(rightDate).width, y + 36);
+
+      y += 86;
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(pad, y);
+      ctx.lineTo(width - pad, y);
+      ctx.stroke();
+      y += 22;
+
+      // 4 Kartu Ringkasan Keuangan
+      const kpiGap = 14;
+      const kpiW = (cw - kpiGap * 3) / 4;
+      const kpiH = 82;
+      const kpiItems = [
+        { label: 'PEMASUKAN KOTOR', value: formatIDR(totalGross), valColor: '#FF751F', bg: '#F9F9F9' },
+        { label: 'TOTAL CASHBACK', value: formatIDR(totalCashback), valColor: '#000000', bg: '#F9F9F9' },
+        { label: 'PEMASUKAN BERSIH', value: formatIDR(totalNet), valColor: '#000000', bg: '#FFE885' },
+        { label: 'TRANSAKSI & LAYANAN', value: `${filtered.length} Tx / ${totalServices} Layanan`, valColor: '#000000', bg: '#F9F9F9' }
+      ];
+
+      kpiItems.forEach((item, idx) => {
+        const kx = pad + idx * (kpiW + kpiGap);
+        ctx.fillStyle = item.bg;
+        ctx.strokeStyle = '#000000';
+        ctx.lineWidth = 1.8;
+        drawRoundedRectCanvas(ctx, kx, y, kpiW, kpiH, 14);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = '800 11px Montserrat, sans-serif';
+        ctx.fillStyle = '#333333';
+        ctx.fillText(item.label, kx + 16, y + 16);
+
+        ctx.font = '800 19px Montserrat, sans-serif';
+        ctx.fillStyle = item.valColor;
+        const fittedVal = fitCanvasEllipsis(ctx, item.value, kpiW - 32);
+        ctx.fillText(fittedVal, kx + 16, y + 40);
+      });
+
+      y += kpiH + 16;
+
+      // 3 Kartu Metode Pembayaran
+      const payGap = 14;
+      const payW = (cw - payGap * 2) / 3;
+      const payH = 66;
+      const payItems = [
+        { label: 'PEMBAYARAN CASH', value: formatIDR(methodSummary.CASH || 0) },
+        { label: 'PEMBAYARAN QRIS', value: formatIDR(methodSummary.QRIS || 0) },
+        { label: 'PEMBAYARAN TRANSFER', value: formatIDR(methodSummary.TRANSFER || 0) }
+      ];
+
+      payItems.forEach((item, idx) => {
+        const px = pad + idx * (payW + payGap);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.strokeStyle = 'rgba(0,0,0,0.45)';
+        ctx.lineWidth = 1.5;
+        drawRoundedRectCanvas(ctx, px, y, payW, payH, 14);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = '800 11px Montserrat, sans-serif';
+        ctx.fillStyle = '#333333';
+        ctx.fillText(item.label, px + 16, y + 13);
+
+        ctx.font = '800 17px Montserrat, sans-serif';
+        ctx.fillStyle = '#000000';
+        ctx.fillText(item.value, px + 16, y + 34);
+      });
+
+      y += payH + 26;
+
+      // Tabel 1: Rekapitulasi Layanan Dipesan
+      ctx.font = '800 13px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.fillText('REKAPITULASI LAYANAN DIPESAN', pad, y);
+      y += 22;
+
+      const sCols = [
+        { label: 'UNIT', w: cw * 0.23, align: 'left' },
+        { label: 'NAMA LAYANAN', w: cw * 0.43, align: 'left' },
+        { label: 'JUMLAH', w: cw * 0.14, align: 'right' },
+        { label: 'TOTAL NOMINAL', w: cw * 0.20, align: 'right' }
+      ];
+
+      const sHeaderH = 34;
+      ctx.fillStyle = '#F9F9F9';
+      ctx.fillRect(pad, y, cw, sHeaderH);
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(pad, y, cw, sHeaderH);
+
+      let colX = pad;
+      ctx.font = '800 11px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      sCols.forEach((col, ci) => {
+        if (ci > 0) {
+          ctx.beginPath();
+          ctx.moveTo(colX, y);
+          ctx.lineTo(colX, y + sHeaderH);
+          ctx.stroke();
+        }
+        const tx = col.align === 'right'
+          ? colX + col.w - 12 - ctx.measureText(col.label).width
+          : colX + 12;
+        ctx.fillText(col.label, tx, y + 11);
+        colX += col.w;
+      });
+      y += sHeaderH;
+
+      const sRowsToRender = serviceRows.length > 0 ? serviceRows : [null];
+      const sRowH = 30;
+      sRowsToRender.forEach(sr => {
+        ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(pad, y, cw, sRowH);
+
+        if (!sr) {
+          ctx.font = '600 12px Montserrat, sans-serif';
+          ctx.fillStyle = '#333333';
+          const emptyTxt = 'Belum ada layanan pada periode ini.';
+          ctx.fillText(emptyTxt, pad + (cw - ctx.measureText(emptyTxt).width) / 2, y + 8);
+          y += sRowH;
+          return;
+        }
+
+        const cells = [
+          { text: sr.platform, bold: true },
+          { text: sr.name, bold: false },
+          { text: `${sr.qty}x`, bold: true },
+          { text: formatIDR(sr.total), bold: true }
+        ];
+
+        let cx = pad;
+        cells.forEach((cell, ci) => {
+          if (ci > 0) {
+            ctx.beginPath();
+            ctx.moveTo(cx, y);
+            ctx.lineTo(cx, y + sRowH);
+            ctx.stroke();
+          }
+          ctx.font = `${cell.bold ? '800' : '600'} 12px Montserrat, sans-serif`;
+          ctx.fillStyle = '#000000';
+          const fitted = fitCanvasEllipsis(ctx, cell.text, sCols[ci].w - 24);
+          const tx = sCols[ci].align === 'right'
+            ? cx + sCols[ci].w - 12 - ctx.measureText(fitted).width
+            : cx + 12;
+          ctx.fillText(fitted, tx, y + 8);
+          cx += sCols[ci].w;
+        });
+        y += sRowH;
+      });
+
+      y += 26;
+
+      // Tabel 2: Jurnal Rincian Transaksi
+      ctx.font = '800 13px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.fillText('JURNAL RINCIAN TRANSAKSI', pad, y);
+      y += 22;
+
+      const tCols = [
+        { label: 'NO', w: cw * 0.05, align: 'left' },
+        { label: 'WAKTU', w: cw * 0.18, align: 'left' },
+        { label: 'PELANGGAN', w: cw * 0.17, align: 'left' },
+        { label: 'LAYANAN', w: cw * 0.29, align: 'left' },
+        { label: 'METODE', w: cw * 0.10, align: 'center' },
+        { label: 'TOTAL', w: cw * 0.11, align: 'right' },
+        { label: 'CASHBACK', w: cw * 0.10, align: 'right' }
+      ];
+
+      const tHeaderH = 34;
+      ctx.fillStyle = '#F9F9F9';
+      ctx.fillRect(pad, y, cw, tHeaderH);
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(pad, y, cw, tHeaderH);
+
+      colX = pad;
+      ctx.font = '800 11px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      tCols.forEach((col, ci) => {
+        if (ci > 0) {
+          ctx.beginPath();
+          ctx.moveTo(colX, y);
+          ctx.lineTo(colX, y + tHeaderH);
+          ctx.stroke();
+        }
+        const tw = ctx.measureText(col.label).width;
+        const tx = col.align === 'right'
+          ? colX + col.w - 10 - tw
+          : col.align === 'center'
+            ? colX + (col.w - tw) / 2
+            : colX + 10;
+        ctx.fillText(col.label, tx, y + 11);
+        colX += col.w;
+      });
+      y += tHeaderH;
+
+      const remainingH = height - pad - y;
+      const tRowsToRender = filtered.length > 0 ? filtered : [null];
+      const maxFitRows = Math.max(1, Math.floor(remainingH / 26));
+      const visibleTxRows = tRowsToRender.slice(0, maxFitRows);
+      const tRowH = filtered.length > 0
+        ? Math.min(32, Math.max(26, Math.floor(remainingH / Math.max(visibleTxRows.length, 1))))
+        : 34;
+
+      visibleTxRows.forEach((o, idx) => {
+        ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(pad, y, cw, tRowH);
+
+        if (!o) {
+          ctx.font = '600 12px Montserrat, sans-serif';
+          ctx.fillStyle = '#333333';
+          const emptyTxt = 'Belum ada transaksi tercatat pada periode ini.';
+          ctx.fillText(emptyTxt, pad + (cw - ctx.measureText(emptyTxt).width) / 2, y + 10);
+          y += tRowH;
+          return;
+        }
+
+        const itemsTxt = (o.items || []).map(it => `${it.qty}x ${it.name}`).join(', ');
+        const cells = [
+          { text: String(idx + 1), bold: false },
+          { text: o.orderTime, bold: false },
+          { text: o.customerName, bold: true },
+          { text: itemsTxt, bold: false },
+          { text: o.paymentMethod || 'CASH', bold: true },
+          { text: formatIDR(o.subtotal), bold: true },
+          { text: formatIDR(o.cashback), bold: false }
+        ];
+
+        let cx = pad;
+        cells.forEach((cell, ci) => {
+          if (ci > 0) {
+            ctx.beginPath();
+            ctx.moveTo(cx, y);
+            ctx.lineTo(cx, y + tRowH);
+            ctx.stroke();
+          }
+          ctx.font = `${cell.bold ? '800' : '600'} 11.5px Montserrat, sans-serif`;
+          ctx.fillStyle = '#000000';
+          const fitted = fitCanvasEllipsis(ctx, cell.text, tCols[ci].w - 18);
+          const fw = ctx.measureText(fitted).width;
+          const tx = tCols[ci].align === 'right'
+            ? cx + tCols[ci].w - 10 - fw
+            : tCols[ci].align === 'center'
+              ? cx + (tCols[ci].w - fw) / 2
+              : cx + 10;
+          ctx.fillText(fitted, tx, y + Math.floor((tRowH - 12) / 2));
+          cx += tCols[ci].w;
+        });
+        y += tRowH;
+      });
+
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = `Laporan-Keuangan-GO-ZY-${bookkeepingPeriod}-${toISODateLocal(new Date())}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Laporan Keuangan PNG format A4 berhasil diunduh.');
+    }
+
+    /* BUAT MENU BARU & KELOLA KATALOG */
+    function syncSuggestedMenuCode() {
+      const unit = document.getElementById('newMenuUnit')?.value || 'GO-CARWASH';
+      const nameVal = (document.getElementById('newMenuName')?.value || '').trim();
+      const codeInput = document.getElementById('newMenuCode');
+      if (!codeInput) return;
+
+      const prefixMap = {
+        'GO-CARWASH': 'GO-WASH',
+        'GO-BARBERSHOP': 'GO-BARBER',
+        'GO-CAFE': 'GO-CAFE'
+      };
+      const shortName = nameVal
+        ? nameVal
+            .toUpperCase()
+            .replace(/[^A-Z0-9]+/g, '')
+            .slice(0, 4) || 'MENU'
+        : 'MENU';
+      const nextNum = String(getAllMenus().length + 1).padStart(2, '0');
+      codeInput.value = `${prefixMap[unit] || 'GO-ZY'}/${shortName}/${nextNum}`;
+    }
+
+    function handleCreateNewMenu(event) {
+      event.preventDefault();
+      const unit = document.getElementById('newMenuUnit').value;
+      const name = document.getElementById('newMenuName').value.trim();
+      const customerCode = document.getElementById('newMenuCode').value.trim().toUpperCase();
+      const price = Number(document.getElementById('newMenuPrice').value);
+      const cashback = Number(document.getElementById('newMenuCashback').value || 0);
+
+      if (!name || !customerCode || price <= 0) {
+        showToast('Lengkapi data menu baru dengan benar.');
+        return;
+      }
+
+      const newMenu = {
+        id: 'custom-' + Date.now(),
+        customerCode,
+        platform: unit,
+        name,
+        price,
+        cashback,
+        isCustom: true
+      };
+
+      customMenus.push(newMenu);
+      saveCustomMenus();
+
+      document.getElementById('newMenuName').value = '';
+      document.getElementById('newMenuPrice').value = '';
+      document.getElementById('newMenuCashback').value = '0';
+      syncSuggestedMenuCode();
+
+      renderPosMenuGrid();
+      renderCatalogManager();
+      showToast(`Menu baru "${name}" berhasil ditambahkan.`);
+    }
+
+    function toggleMenuAvailability(menuId) {
+      if (disabledMenuIds.includes(menuId)) {
+        disabledMenuIds = disabledMenuIds.filter(id => id !== menuId);
+      } else {
+        disabledMenuIds.push(menuId);
+      }
+      saveCustomMenus();
+      renderPosMenuGrid();
+      renderCatalogManager();
+    }
+
+    function deleteCustomMenu(menuId) {
+      const target = customMenus.find(m => m.id === menuId);
+      if (!target) return;
+      openDeleteModal(`Hapus menu "${target.name}" dari daftar?`, () => {
+        customMenus = customMenus.filter(m => m.id !== menuId);
+        disabledMenuIds = disabledMenuIds.filter(id => id !== menuId);
+        saveCustomMenus();
+        renderPosMenuGrid();
+        renderCatalogManager();
+        showToast(`Menu "${target.name}" berhasil dihapus.`);
+      });
+    }
+
+    function renderCatalogManager() {
+      const listEl = document.getElementById('catalogManageList');
+      const countBadge = document.getElementById('catalogCountBadge');
+      if (!listEl) return;
+
+      const all = getAllMenus();
+      if (countBadge) countBadge.textContent = `${all.length} Menu`;
+
+      listEl.innerHTML = all
+        .map(m => {
+          const isDisabled = disabledMenuIds.includes(m.id);
+          const safeId = String(m.id).replace(/'/g, "\\'");
+          return `
+            <div class="p-3.5 rounded-2xl bg-[#F9F9F9] dark:bg-[#000000] border border-[#000000]/15 dark:border-[#FFFFFF]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${isDisabled ? 'opacity-60' : ''}">
+              <div class="space-y-1 min-w-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="px-2 py-0.5 rounded-full bg-[#000000] text-[#FFCB05] text-[10px] font-eb">
+                    ${m.platform}
+                  </span>
+                  <span class="text-[11px] font-eb text-[#FF751F]">${m.customerCode}</span>
+                  ${
+                    m.isCustom
+                      ? '<span class="px-2 py-0.5 rounded-full bg-[#FF751F] text-[#FFFFFF] text-[10px] font-eb">Menu Baru</span>'
+                      : ''
+                  }
+                </div>
+                <div class="text-sm font-eb text-[#000000] dark:text-[#FFFFFF] truncate">${m.name}</div>
+                <div class="text-xs font-sb text-[#333333] dark:text-[#F9F9F9]/80 tabular-nums">
+                  Tarif: <span class="font-eb text-[#000000] dark:text-[#FFFFFF]">${formatIDR(m.price)}</span>
+                  ${m.cashback > 0 ? ` • Cashback: <span class="font-eb text-[#FF751F]">${formatIDR(m.cashback)}</span>` : ''}
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onclick="toggleMenuAvailability('${safeId}')"
+                  class="px-3 py-1.5 rounded-xl border text-[11px] font-eb cursor-pointer transition-colors ${
+                    isDisabled
+                      ? 'border-[#000000]/30 dark:border-[#FFFFFF]/30 bg-transparent text-[#333333] dark:text-[#F9F9F9]'
+                      : 'border-[#000000] bg-[#FFCB05] text-[#000000]'
+                  }"
+                >
+                  ${isDisabled ? 'Nonaktif' : 'Aktif'}
+                </button>
+                ${
+                  m.isCustom
+                    ? `<button
+                        type="button"
+                        onclick="deleteCustomMenu('${safeId}')"
+                        class="px-3 py-1.5 rounded-xl border border-[#000000]/25 dark:border-[#FFFFFF]/25 text-[11px] font-eb text-[#333333] dark:text-[#F9F9F9] hover:border-[#FF751F] hover:text-[#FF751F] cursor-pointer transition-colors"
+                      >
+                        Hapus
+                      </button>`
+                    : ''
+                }
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    /* INVOICE PNG GENERATOR & MODAL */
+    function loadInvoiceLogoImage() {
+      if (cachedInvoiceLogoImg) {
+        return Promise.resolve(cachedInvoiceLogoImg);
+      }
+      return new Promise(resolve => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          cachedInvoiceLogoImg = img;
+          resolve(img);
+        };
+        img.onerror = () => resolve(null);
+        img.src = GOZY_INVOICE_LOGO_URL;
+      });
+    }
+
+    function formatOneMonthLater(dateObj) {
+      const base = dateObj instanceof Date && !isNaN(dateObj.getTime()) ? dateObj : new Date();
+      const targetYear = base.getFullYear();
+      const targetMonth = base.getMonth() + 1;
+      const lastDayTarget = new Date(targetYear, targetMonth + 1, 0).getDate();
+      const targetDay = Math.min(base.getDate(), lastDayTarget);
+      const exp = new Date(targetYear, targetMonth, targetDay);
+      const dd = String(exp.getDate()).padStart(2, '0');
+      const mm = String(exp.getMonth() + 1).padStart(2, '0');
+      const yyyy = exp.getFullYear();
+      return `${dd}/${mm}/${yyyy}`;
+    }
+
+    async function generateOrderReceiptPng(order) {
+      const logoImg = await loadInvoiceLogoImage();
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const dpr = 2;
+      const width = 720;
+      const pad = 40;
+      const items = order.items || [];
+      const height = 535 + items.length * 40;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(2, 2, width - 4, height - 4);
+
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, width, 128);
+      ctx.fillStyle = '#FF751F';
+      ctx.fillRect(0, 122, width, 6);
+
+      ctx.textBaseline = 'top';
+      if (logoImg && logoImg.naturalWidth > 0 && logoImg.naturalHeight > 0) {
+        const logoH = 78;
+        const logoW = (logoImg.naturalWidth / logoImg.naturalHeight) * logoH;
+        ctx.drawImage(logoImg, pad, (122 - logoH) / 2, logoW, logoH);
+      } else {
+        ctx.font = '800 38px Montserrat, sans-serif';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText('GO-', pad, 40);
+        const wGo = ctx.measureText('GO-').width;
+        ctx.fillStyle = '#FF751F';
+        ctx.fillText('ZY', pad + wGo, 40);
+      }
+
+      ctx.font = '800 22px Montserrat, sans-serif';
+      ctx.fillStyle = '#FFFFFF';
+      const rightHdr = 'INVOICE';
+      ctx.fillText(rightHdr, width - pad - ctx.measureText(rightHdr).width, 48);
+
+      let y = 152;
+      ctx.font = '800 13px Montserrat, sans-serif';
+      ctx.fillStyle = '#333333';
+      ctx.fillText(`NOMOR PELANGGAN: ${order.customerNo}`, pad, y);
+      y += 26;
+      ctx.fillText(`WAKTU PESANAN: ${order.orderTime} WITA`, pad, y);
+      y += 26;
+      ctx.fillStyle = '#000000';
+      ctx.fillText(`NAMA PELANGGAN: ${order.customerName} (${order.paymentMethod || 'CASH'})`, pad, y);
+      y += 32;
+
+      ctx.beginPath();
+      ctx.moveTo(pad, y);
+      ctx.lineTo(width - pad, y);
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      y += 18;
+
+      items.forEach(it => {
+        ctx.font = '600 18px Montserrat, sans-serif';
+        ctx.fillStyle = '#333333';
+        ctx.fillText(`${it.qty}x ${it.name}`, pad, y);
+
+        const pStr = formatIDR(it.price * it.qty);
+        ctx.font = '800 18px Montserrat, sans-serif';
+        ctx.fillStyle = '#000000';
+        ctx.fillText(pStr, width - pad - ctx.measureText(pStr).width, y);
+        y += 38;
+      });
+
+      y += 8;
+      ctx.beginPath();
+      ctx.moveTo(pad, y);
+      ctx.lineTo(width - pad, y);
+      ctx.stroke();
+      y += 20;
+
+      ctx.font = '800 20px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.fillText('TOTAL BIAYA', pad, y);
+      const totStr = formatIDR(order.subtotal);
+      ctx.fillText(totStr, width - pad - ctx.measureText(totStr).width, y);
+      y += 36;
+
+      ctx.fillStyle = '#FFCB05';
+      ctx.fillRect(pad, y, width - pad * 2, 46);
+      ctx.strokeRect(pad, y, width - pad * 2, 46);
+      ctx.fillStyle = '#000000';
+      ctx.font = '800 17px Montserrat, sans-serif';
+      ctx.fillText('CASHBACK', pad + 16, y + 13);
+      const cbStr = formatIDR(order.cashback);
+      ctx.fillText(cbStr, width - pad - 16 - ctx.measureText(cbStr).width, y + 13);
+      y += 60;
+
+      const validUntilStr = formatOneMonthLater(parseOrderDate(order));
+      ctx.font = '600 14px Montserrat, sans-serif';
+      ctx.fillStyle = '#333333';
+      ctx.fillText(`Berlaku hingga ${validUntilStr}`, pad, y);
+      y += 34;
+
+      ctx.font = '800 14px Montserrat, sans-serif';
+      ctx.fillStyle = '#000000';
+      ctx.fillText('Wifi: GO-ZY', pad, y);
+      y += 22;
+      ctx.fillText('Password: SiapSediaBuatCeria', pad, y);
+
+      return canvas.toDataURL('image/png');
+    }
+
+    async function openOrderReceiptModal(uid, autoDownload = false) {
+      const order = ordersList.find(o => o.uid === uid);
+      if (!order) return;
+
+      activeReceiptDataUrl = await generateOrderReceiptPng(order);
+      const safeName = String(order.customerName || 'Pelanggan').replace(/[^a-zA-Z0-9_-]+/g, '-');
+      activeReceiptFilename = `Invoice-GO-ZY-${safeName}.png`;
+
+      if (autoDownload) {
+        downloadActiveReceiptPng();
+      }
+
+      const modal = document.getElementById('receiptModal');
+      const body = document.getElementById('receiptModalBody');
+      const actions = document.getElementById('receiptModalActions');
+
+      if (body) {
+        body.innerHTML = `<img src="${activeReceiptDataUrl}" alt="Invoice GO-ZY" class="w-full h-auto rounded-xl border border-[#000000]" />`;
+      }
+      if (actions) {
+        actions.innerHTML = `
+          <button
+            type="button"
+            onclick="downloadActiveReceiptPng()"
+            class="zy-btn-primary w-full py-3 px-4 text-xs uppercase tracking-wider cursor-pointer"
+          >
+            Unduh Invoice
+          </button>
+        `;
+      }
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function downloadActiveReceiptPng() {
+      if (!activeReceiptDataUrl) return;
+      const link = document.createElement('a');
+      link.href = activeReceiptDataUrl;
+      link.download = activeReceiptFilename || 'Invoice-GO-ZY.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('Invoice berhasil diunduh.');
+    }
+
+    function closeReceiptModal() {
+      const modal = document.getElementById('receiptModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openDeleteModal(message, onConfirm) {
+      const modal = document.getElementById('deleteConfirmModal');
+      const msgEl = document.getElementById('deleteModalMessage');
+      const confirmBtn = document.getElementById('confirmDeleteBtn');
+      if (msgEl) msgEl.textContent = message;
+      pendingDeleteCallback = typeof onConfirm === 'function' ? onConfirm : null;
+      if (confirmBtn) {
+        confirmBtn.onclick = () => {
+          const cb = pendingDeleteCallback;
+          closeDeleteModal();
+          if (cb) cb();
+        };
+      }
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      const modal = document.getElementById('deleteConfirmModal');
+      if (modal) modal.classList.add('hidden');
+      pendingDeleteCallback = null;
+    }
+
+    function refreshAllDashboardViews() {
+      renderMonthlySummaryCards();
+      renderOrdersTable();
+      renderMonevDashboard();
+      renderBookkeepingSheet();
+      renderCatalogManager();
+    }
+
+    function updatePosOrderClock() {
+      const timeEl = document.getElementById('posOrderTime');
+      if (timeEl) {
+        timeEl.value = formatOrderDateTime(new Date());
+      }
+    }
+
+    function initAdminApp() {
+      seedInitialOrdersIfNeeded();
+      syncThemeIcons();
+
+      const now = new Date();
+      const datePicker = document.getElementById('bkDatePicker');
+      const monthPicker = document.getElementById('bkMonthPicker');
+      if (datePicker && !datePicker.value) datePicker.value = toISODateLocal(now);
+      if (monthPicker && !monthPicker.value) monthPicker.value = toISOMonthLocal(now);
+
+      updatePosOrderClock();
+      setInterval(updatePosOrderClock, 1000);
+
+      renderPosMenuGrid();
+      renderPosCheckout();
+      syncSuggestedMenuCode();
+      refreshAllDashboardViews();
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeReceiptModal();
+        closeDeleteModal();
+      }
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAdminApp);
+    } else {
+      initAdminApp();
+    }
+  </script>
+</body>
+</html>
